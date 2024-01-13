@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import UIKit
+
+class SearchCellViewModel {
+    
+    var forecastRealm: ForecastRealm?
+    
+    init(forecastRealm: ForecastRealm) {
+        self.forecastRealm = forecastRealm
+    }
+    
+}

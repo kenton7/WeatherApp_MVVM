@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MainViewController: UIViewController {
+    
+    let locationManager = CLLocationManager()
     
     var weatherImage: UIImageView = {
         let image = UIImageView()
@@ -46,7 +49,7 @@ class MainViewController: UIViewController {
                                                          attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
     }()
     
@@ -254,7 +257,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let collectionView: UICollectionView = {
+    var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -264,24 +267,46 @@ class MainViewController: UIViewController {
         return collectionView
     }()
     
-    let activityIndicator = UIActivityIndicatorView()
+    lazy var spinner: CustomSpinner = {
+        let spinner = CustomSpinner(squareLength: 100)
+        spinner.isHidden = true
+        return spinner
+    }()
+    
+    var coordinates: Coordinates?
     
     var viewModel = MainViewModel()
     var cellDataSource = [MainCollectionViewCellViewModel]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         setConstraints()
+        setupCollectionView()
         bindViewModel()
+        
+        refreshButton.addTarget(self, action: #selector(refreshButtonPressed), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
     }
     
     private func bindViewModel() {
         viewModel.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading = isLoading else { return }
             DispatchQueue.main.async {
-                isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                isLoading ? self.spinner.startAnimation(delay: 0.0, replicates: 20) : self.spinner.stopAnimation()
             }
         }
         
@@ -289,6 +314,23 @@ class MainViewController: UIViewController {
             guard let self, let data = data else { return }
             cellDataSource = data
             reloadCollectionView()
+        }
+        
+        viewModel.currentWeatherDataSource.bind { [weak self] data in
+            guard let self, let data = data else { return }
+            DispatchQueue.main.async {
+                
+                self.animateBackground(state: String(data.weather?.first?.icon?.last ?? "d"))
+                
+                self.temperatureLabel.text = "\(Int(data.main?.temp?.rounded() ?? 0))°"
+                self.cityLabel.text = data.name
+                self.humidityLabel.text = "\(Int(data.main?.humidity ?? 0))%"
+                self.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) м/с"
+                self.weatherDescription.text = data.weather?.first?.description?.capitalizingFirstLetter()
+                self.pressureLabel.text = "\(data.main?.pressure ?? 0) мм.рт.ст."
+                self.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) мм.рт.ст."
+                self.weatherImage.image = GetWeatherImage.weatherImages(id: data.weather?.first?.id ?? 803, pod: String(data.weather?.first?.icon?.last ?? "d"))
+            }
         }
     }
 
@@ -308,32 +350,55 @@ class MainViewController: UIViewController {
         view.addSubview(winddStackView)
         view.addSubview(sevenDaysForecast)
         view.addSubview(todayLabel)
-        view.addSubview(activityIndicator)
+        view.addSubview(spinner)
+        view.addSubview(windName)
+        view.addSubview(windImage)
+        view.addSubview(windLabel)
+        view.addSubview(winddStackView)
+        weatherDataStackView.addArrangedSubview(weatherDescription)
+        weatherDataStackView.addArrangedSubview(weatherImage)
+        weatherDataStackView.addArrangedSubview(temperatureLabel)
+        weatherDataStackView.addArrangedSubview(dateLabel)
+        visibilityStackView.addArrangedSubview(pressureImage)
+        visibilityStackView.addArrangedSubview(pressureLabel)
+        visibilityStackView.addArrangedSubview(pressureName)
+        humidityStackView.addArrangedSubview(humidityImage)
+        humidityStackView.addArrangedSubview(humidityLabel)
+        humidityStackView.addArrangedSubview(humidityName)
+        winddStackView.addArrangedSubview(windImage)
+        winddStackView.addArrangedSubview(windLabel)
+        winddStackView.addArrangedSubview(windName)
+        detailStackView.addArrangedSubview(visibilityStackView)
+        detailStackView.addArrangedSubview(humidityStackView)
+        detailStackView.addArrangedSubview(winddStackView)
+    }
+    
+    func animateBackground(state: String) {
+        guard let nightImage = UIImage(named: "nightSky"), let dayImage = UIImage(named: "BackgroundImage") else { return }
         
-        weatherDataStackView = UIStackView(arrangedSubviews: [
-            weatherDescription,
-            weatherImage,
-            temperatureLabel,
-            dateLabel
-        ])
+        if state == "d" {
+            self.view.animateBackground(image: dayImage, on: self.view)
+        } else {
+            self.view.animateBackground(image: nightImage, on: self.view)
+        }
+    }
+    
+    @objc private func refreshButtonPressed() {
+        let privateQueue = DispatchQueue.global(qos: .utility)
         
-        visibilityStackView = UIStackView(arrangedSubviews: [
-            pressureImage,
-            pressureLabel,
-            pressureName
-        ])
+        DispatchQueue.main.async {
+            self.spinner.isHidden = false
+            self.spinner.startAnimation(delay: 0.0, replicates: 20)
+        }
         
-        humidityStackView = UIStackView(arrangedSubviews: [
-            humidityImage,
-            humidityLabel,
-            humidityName
-        ])
-        
-        detailStackView = UIStackView(arrangedSubviews: [
-            visibilityStackView,
-            humidityStackView,
-            winddStackView
-        ])
+        privateQueue.async { [weak self] in
+            if let coordinates = UserDefaults.standard.data(forKey: "coordinates") {
+                let decodedCoordinates = try! JSONDecoder().decode(Coordinates.self, from: coordinates)
+                guard let self else { return }
+                self.viewModel.getCurrentWeather(longitude: decodedCoordinates.longitude, latitude: decodedCoordinates.latitude)
+                //self.viewModel.getForecast(longitude: decodedCoordinates.last!.longitude, latitude: decodedCoordinates.last!.latitude)
+            }
+        }
     }
 
 }
@@ -342,7 +407,7 @@ extension MainViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             cityLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            cityLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            cityLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             cityLabel.heightAnchor.constraint(equalToConstant: 30),
             
             refreshButton.centerYAnchor.constraint(equalTo: cityLabel.centerYAnchor),
@@ -363,6 +428,7 @@ extension MainViewController {
             humidityStackView.topAnchor.constraint(equalTo: visibilityStackView.topAnchor),
             humidityImage.heightAnchor.constraint(equalToConstant: 24),
             humidityLabel.centerXAnchor.constraint(equalTo: humidityImage.centerXAnchor),
+            humidityStackView.centerXAnchor.constraint(equalTo: detailStackView.centerXAnchor),
 
             windImage.heightAnchor.constraint(equalToConstant: 24),
             
@@ -381,10 +447,7 @@ extension MainViewController {
             collectionView.topAnchor.constraint(equalTo: sevenDaysForecast.bottomAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            collectionView.heightAnchor.constraint(equalToConstant: 110),
-            
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            collectionView.heightAnchor.constraint(equalToConstant: 100),
         ])
     }
 }

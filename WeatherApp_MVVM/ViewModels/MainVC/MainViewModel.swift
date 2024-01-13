@@ -17,6 +17,7 @@ class MainViewModel {
     let currentWeatherService = CurrentWeatherFetch()
     let forecastService = ForecastFetch()
     var isDay: Bool {
+        print(currentWeatherDataSource.value?.weather?.first?.icon?.last)
         return currentWeatherDataSource.value?.weather?.first?.icon?.last == "d" ? true : false
     }
     
@@ -40,6 +41,7 @@ class MainViewModel {
                     self.isLoading.value = false
                     let factoryModel = CurrentWeatherFactory.makeCurrentWeatherModel(currentWeather)
                     currentWeatherDataSource.value = factoryModel
+                    
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

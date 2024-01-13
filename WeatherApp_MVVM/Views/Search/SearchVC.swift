@@ -6,24 +6,127 @@
 //
 
 import UIKit
+import RealmSwift
+import CoreLocation
 
 class SearchVC: UIViewController {
+    
+    let locationManager = CLLocationManager()
+    var coordinates: Coordinates?
+    var cellDataSource = [SearchCellViewModel]()
+    var realmDataSource = [SearchCellViewModel]()
+    var viewModel = SearchVCViewModel()
+    private lazy var realm = try! Realm()
+    
+    let locationButton: UIButton = {
+       let button = UIButton()
+        button.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.clipsToBounds = true
+        button.layer.backgroundColor = UIColor(red: 0.322, green: 0.239, blue: 0.498, alpha: 1).cgColor
+        button.layer.borderColor = UIColor.green.cgColor
+        button.setImage(UIImage(named: "location"), for: .normal)
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        return searchBar
+    }()
+    
+    let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        return tableView
+    }()
+    
+    lazy var spinner: CustomSpinner = {
+        let spinner = CustomSpinner(squareLength: 100)
+        spinner.isHidden = true
+        return spinner
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        viewModel.forecastRealm = self.realm.objects(ForecastRealm.self)
+        
+                
+        setupViews()
+        setConstraints()
+        setupTableView()
+        setupSearchBar()
+        bindViewModel()        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+//        for city in viewModel.forecastRealm {
+//            viewModel.updateWeatherIn(city: city.cityName, indexPath: IndexPath(row: 0, section: 0))
+//        }
     }
-    */
+    
+    private func bindViewModel() {
+        viewModel.isLoading.bind { [weak self] isLoading in
+            guard let self, let isLoading = isLoading else { return }
+            DispatchQueue.main.async {
+                isLoading ? self.spinner.startAnimation(delay: 0.0, replicates: 20) : self.spinner.stopAnimation()
+            }
+        }
+        
+        viewModel.currentWeatherDataSource.bind { [weak self] data in
+            guard let self, let data = data else { return }
+            cellDataSource = data
+            reloadTableView()
+        }
+        
+        viewModel.cellDataSource.bind { [weak self] data in
+            guard let self, let data = data else { return }
+            realmDataSource = data
+            //realmDataSource.append(SearchCellViewModel(forecastRealm: data))
+            reloadTableView()
+        }
+    }
+    
+    func setupViews() {
+        view.backgroundColor = UIColor(red: 0.11, green: 0.16, blue: 0.22, alpha: 1)
+        view.addSubview(locationButton)
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        view.addSubview(spinner)
+    }
 
+}
+
+extension SearchVC {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            locationButton.widthAnchor.constraint(equalToConstant: 55),
+            locationButton.heightAnchor.constraint(equalToConstant: 55),
+            locationButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            locationButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            
+            searchBar.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: locationButton.safeAreaLayoutGuide.leadingAnchor, constant: -10),
+            
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
+    }
 }

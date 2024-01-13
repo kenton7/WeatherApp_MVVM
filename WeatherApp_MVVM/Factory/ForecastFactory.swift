@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class ForecastFactory {
+    class func makeForecastModel(_ model: WeatherModelProtocol) -> ForecastModel {
+        return ForecastModel(list: model.list, city: model.city)
+    }
+}
