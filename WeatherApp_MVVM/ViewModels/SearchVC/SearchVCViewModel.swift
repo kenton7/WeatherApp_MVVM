@@ -14,7 +14,6 @@ class SearchVCViewModel {
     var cellDataSource: Observable<[SearchCellViewModel]> = Observable(nil)
     var currentWeatherDataSource: Observable<[SearchCellViewModel]> = Observable(nil)
     var dataSource = [CurrentWeatherModel]()
-    //var realmListener: Observable<[SearchCellViewModel]> = Observable(nil)
     let currentWeatherService = CurrentWeatherFetch()
     let geoService = GeoService()
     lazy var realm = try! Realm()
@@ -49,32 +48,25 @@ class SearchVCViewModel {
         self.geoService.searchCity(city) { cityResult in
             switch cityResult {
             case .success(let geoData):
-                geoData.forEach {
-                    print("local names: \($0.name)")
-                }
                 guard let localName = geoData.first?.localNames?["ru"] else { return }
-                print(localName)
-                //guard let longitude = self.forecastRealm[indexPath.section].longitude, let latitude = self.forecastRealm[indexPath.section].latitude else { return }
-               //guard let longitude = geoData.first?.lon, let latitude = geoData.first?.lat else { return }
                 self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, latitude: self.forecastRealm[indexPath.section].latitude, units: UserDefaults.standard.string(forKey: "units") ?? "metric", language: .ru) { currentWeatherDataResult in
                     switch currentWeatherDataResult {
                     case .success(let weatherData):
-                        print("Погода в \(weatherData.name): \(weatherData.weather?.first?.description), температура = \(weatherData.main?.temp)")
+                        print("Погода в \(String(describing: weatherData.name)): \(String(describing: weatherData.weather?.first?.description)), температура = \(String(describing: weatherData.main?.temp))")
                         let realmFactory = CurrentWeatherFactory.makeRealmModel(weatherData, cityName: localName)
                         let weatherFactory = CurrentWeatherFactory.makeCurrentWeatherModelArray(weatherData)
                         self.realmDataSource = realmFactory
                         self.dataSource = weatherFactory
-                        //self.mapCellData()
                         print("indexPath: \(self.forecastRealm[indexPath.section].cityName)")
                         DispatchQueue.main.async {
                             do {
                                 try self.realm.write {
-                                    //self.forecastRealm[indexPath.section].cityName = geoData.first?.localNames?["ru"] ?? "ru"
                                     self.forecastRealm[indexPath.section].id = weatherData.weather?[0].id ?? 803
                                     self.forecastRealm[indexPath.section].dayOrNight = String(weatherData.weather?[0].icon?.last ?? "d")
                                     self.forecastRealm[indexPath.section].temp = weatherData.main?.temp?.rounded() ?? 0.0
                                     self.forecastRealm[indexPath.section].latitude = weatherData.coord?.lat ?? 0.0
                                     self.forecastRealm[indexPath.section].longitude = weatherData.coord?.lon ?? 0.0
+                                    self.forecastRealm[indexPath.section].weatherDescription = weatherData.weather?[0].description ?? ""
                                 }
                             }
                             catch let error {
@@ -91,7 +83,6 @@ class SearchVCViewModel {
         }
     }
     
-    //РАБОТАЕТ
     func searchCity(city: String) {
         isLoading.value = true
         self.geoService.searchCity(city) { cityResult in

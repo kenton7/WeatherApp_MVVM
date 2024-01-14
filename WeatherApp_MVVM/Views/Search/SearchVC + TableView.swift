@@ -40,10 +40,10 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.cellID, for: indexPath) as? SearchTableViewCell else {return UITableViewCell() }
-        print("viewModelCity: \(viewModel.forecastRealm[indexPath.section].cityName)")
         viewModel.updateWeatherIn(city: viewModel.forecastRealm[indexPath.section].cityName, indexPath: indexPath)
         
         let realmViewModelCell = viewModel.forecastRealm[indexPath.section]
+        print("realmViewModelCell \(realmViewModelCell.weatherDescription)")
         cell.setupCellNew(realmViewModelCell)
         return cell
     }

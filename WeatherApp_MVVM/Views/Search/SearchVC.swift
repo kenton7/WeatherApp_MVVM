@@ -72,11 +72,7 @@ class SearchVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        
-//        for city in viewModel.forecastRealm {
-//            viewModel.updateWeatherIn(city: city.cityName, indexPath: IndexPath(row: 0, section: 0))
-//        }
+        bindViewModel() 
     }
     
     private func bindViewModel() {
@@ -96,7 +92,6 @@ class SearchVC: UIViewController {
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             realmDataSource = data
-            //realmDataSource.append(SearchCellViewModel(forecastRealm: data))
             reloadTableView()
         }
     }
