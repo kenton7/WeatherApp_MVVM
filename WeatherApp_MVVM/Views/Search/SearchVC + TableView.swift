@@ -25,6 +25,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func reloadTableView() {
+        print("RELOAD")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -40,10 +41,9 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.cellID, for: indexPath) as? SearchTableViewCell else {return UITableViewCell() }
-        viewModel.updateWeatherIn(city: viewModel.forecastRealm[indexPath.section].cityName, indexPath: indexPath)
+        viewModel.updateWeatherIn(city: viewModel.forecastRealm[indexPath.section].cityName, indexPath: indexPath, completion: reloadTableView)
         
         let realmViewModelCell = viewModel.forecastRealm[indexPath.section]
-        print("realmViewModelCell \(realmViewModelCell.weatherDescription)")
         cell.setupCellNew(realmViewModelCell)
         return cell
     }

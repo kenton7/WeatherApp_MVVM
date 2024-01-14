@@ -70,11 +70,6 @@ class SearchVC: UIViewController {
         bindViewModel()        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        bindViewModel() 
-    }
-    
     private func bindViewModel() {
         viewModel.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading = isLoading else { return }
@@ -83,16 +78,17 @@ class SearchVC: UIViewController {
             }
         }
         
-        viewModel.currentWeatherDataSource.bind { [weak self] data in
-            guard let self, let data = data else { return }
-            cellDataSource = data
-            reloadTableView()
-        }
+//        viewModel.currentWeatherDataSource.bind { [weak self] data in
+//            guard let self, let data = data else { return }
+//            cellDataSource = data
+//            reloadTableView()
+//        }
+
         
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             realmDataSource = data
-            reloadTableView()
+            reloadTableView() // - из-за этого постоянное обновление ячеек и куча запросов в API
         }
     }
     

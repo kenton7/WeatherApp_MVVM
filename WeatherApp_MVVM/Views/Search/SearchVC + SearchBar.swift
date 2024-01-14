@@ -32,43 +32,5 @@ extension SearchVC: UISearchBarDelegate {
         viewModel.searchCity(city: searchingCity)
         searchBar.text = ""
         searchBar.endEditing(true)
-        
-        //        currentWeatherService.weatherByGeo(city: searchingCity) { [weak self] result in
-        //            switch result {
-        //            case .success(let city):
-        //                guard let latitude = city.first?.lat, let longitude = city.first?.lon, let self = self else { return }
-        //                self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude, units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, language: Language.ru) { result in
-        //                    switch result {
-        //                    case .success(let currentWeather):
-        //                        DispatchQueue.main.async {
-        //                            try! self.realm.write({
-        //                                self.realm.add(ForecastRealm(cityName: city.first!.localNames!["ru"]!,
-        //                                                             dayOrNight: String(currentWeather.weather?.first?.icon?.last ?? "d"),
-        //                                                             weatherDescription: currentWeather.weather?.first?.description ?? "",
-        //                                                             id: currentWeather.weather?.first?.id ?? 803,
-        //                                                             temp: currentWeather.main?.temp?.rounded() ?? 0.0,
-        //                                                             latitude: latitude, longitude: longitude,
-        //                                                             tempMin: currentWeather.main?.tempMin?.rounded() ?? 0.0,
-        //                                                             tempMax: currentWeather.main?.tempMax?.rounded() ?? 0.0,
-        //                                                             pressure: currentWeather.main?.pressure ?? 0,
-        //                                                             humidity: currentWeather.main?.humidity ?? 0,
-        //                                                             windSpeed: currentWeather.wind?.speed ?? 0,
-        //                                                             selectedItem: 0,
-        //                                                             date: "sds"))
-        //                                self.uiElements.tableView.reloadData()
-        //                                self.uiElements.spinner.isHidden = true
-        //                            })
-        //                            searchBar.text = ""
-        //                            searchBar.endEditing(true)
-        //                        }
-        //                    case .failure(let error):
-        //                        print(error)
-        //                    }
-        //                }
-        //            case .failure(let error):
-        //                print(error)
-        //            }
-        //        }
-        //    }
     }
 }

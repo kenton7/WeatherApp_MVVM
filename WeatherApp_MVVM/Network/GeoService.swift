@@ -9,11 +9,11 @@ import Foundation
 
 class GeoService {
     private let client: RestApiClient
-    private let currentWeatherService: CurrentWeatherFetch
+    //private let currentWeatherService: CurrentWeatherFetch
     
-    init(client: RestApiClient = .init(), currentWeatherService: CurrentWeatherFetch = .init() ) {
+    init(client: RestApiClient = .init()/*, currentWeatherService: CurrentWeatherFetch = .init()*/ ) {
         self.client = client
-        self.currentWeatherService = currentWeatherService
+        //self.currentWeatherService = currentWeatherService
     }
     
     func searchCity(_ city: String, completion: @escaping (Result<Geocoding, Error>) -> Void) {

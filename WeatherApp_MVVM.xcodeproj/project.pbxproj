@@ -48,6 +48,12 @@
 		0902BF8C2B5135AC00C5CDA0 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902BF8B2B5135AC00C5CDA0 /* Geocoding.swift */; };
 		0902BF8E2B51373A00C5CDA0 /* SearchVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902BF8D2B51373A00C5CDA0 /* SearchVCViewModel.swift */; };
 		0902BF902B516D6100C5CDA0 /* ForecastRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902BF8F2B516D6100C5CDA0 /* ForecastRealm.swift */; };
+		09DD47532B53EEA2006929A4 /* SettingsVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD47522B53EEA2006929A4 /* SettingsVCViewModel.swift */; };
+		09DD47552B53EEC6006929A4 /* SettingsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD47542B53EEC6006929A4 /* SettingsCellViewModel.swift */; };
+		09DD47572B53EEEF006929A4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD47562B53EEEF006929A4 /* Settings.swift */; };
+		09DD47592B53F03D006929A4 /* Settings + TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD47582B53F03D006929A4 /* Settings + TableView.swift */; };
+		09DD475D2B53F0C8006929A4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD475C2B53F0C8006929A4 /* SettingsTableViewCell.swift */; };
+		09DD475F2B53F347006929A4 /* OtherMeasurementsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD475E2B53F347006929A4 /* OtherMeasurementsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +98,12 @@
 		0902BF8B2B5135AC00C5CDA0 /* Geocoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoding.swift; sourceTree = "<group>"; };
 		0902BF8D2B51373A00C5CDA0 /* SearchVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCViewModel.swift; sourceTree = "<group>"; };
 		0902BF8F2B516D6100C5CDA0 /* ForecastRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastRealm.swift; sourceTree = "<group>"; };
+		09DD47522B53EEA2006929A4 /* SettingsVCViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVCViewModel.swift; sourceTree = "<group>"; };
+		09DD47542B53EEC6006929A4 /* SettingsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellViewModel.swift; sourceTree = "<group>"; };
+		09DD47562B53EEEF006929A4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		09DD47582B53F03D006929A4 /* Settings + TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings + TableView.swift"; sourceTree = "<group>"; };
+		09DD475C2B53F0C8006929A4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		09DD475E2B53F347006929A4 /* OtherMeasurementsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMeasurementsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,8 +188,9 @@
 		0902BF402B50319300C5CDA0 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				0902BF822B51265900C5CDA0 /* SearchVC */,
-				0902BF812B51265000C5CDA0 /* MainVC */,
+				0902BF812B51265000C5CDA0 /* Main */,
+				0902BF822B51265900C5CDA0 /* Search */,
+				09DD47512B53EE85006929A4 /* Settings */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -203,6 +216,7 @@
 				0902BF682B50479900C5CDA0 /* Coordinates.swift */,
 				0902BF8B2B5135AC00C5CDA0 /* Geocoding.swift */,
 				0902BF8F2B516D6100C5CDA0 /* ForecastRealm.swift */,
+				09DD47562B53EEEF006929A4 /* Settings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,6 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				0902BF5F2B5044B100C5CDA0 /* SettingsVC.swift */,
+				09DD47582B53F03D006929A4 /* Settings + TableView.swift */,
+				09DD475C2B53F0C8006929A4 /* SettingsTableViewCell.swift */,
+				09DD475E2B53F347006929A4 /* OtherMeasurementsCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -272,22 +289,31 @@
 			path = CustomSpinner;
 			sourceTree = "<group>";
 		};
-		0902BF812B51265000C5CDA0 /* MainVC */ = {
+		0902BF812B51265000C5CDA0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				0902BF412B5031AA00C5CDA0 /* MainViewModel.swift */,
 				0902BF432B50321E00C5CDA0 /* MainCollectionViewCellViewModel.swift */,
 			);
-			path = MainVC;
+			path = Main;
 			sourceTree = "<group>";
 		};
-		0902BF822B51265900C5CDA0 /* SearchVC */ = {
+		0902BF822B51265900C5CDA0 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				0902BF832B51268000C5CDA0 /* SearchCellViewModel.swift */,
 				0902BF8D2B51373A00C5CDA0 /* SearchVCViewModel.swift */,
 			);
-			path = SearchVC;
+			path = Search;
+			sourceTree = "<group>";
+		};
+		09DD47512B53EE85006929A4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				09DD47522B53EEA2006929A4 /* SettingsVCViewModel.swift */,
+				09DD47542B53EEC6006929A4 /* SettingsCellViewModel.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,6 +399,7 @@
 				0902BF252B502E2D00C5CDA0 /* MainViewController.swift in Sources */,
 				0902BF702B5063C300C5CDA0 /* CalculateMesurements.swift in Sources */,
 				0902BF8E2B51373A00C5CDA0 /* SearchVCViewModel.swift in Sources */,
+				09DD47592B53F03D006929A4 /* Settings + TableView.swift in Sources */,
 				0902BF5A2B50446A00C5CDA0 /* TabBarController.swift in Sources */,
 				0902BF4A2B5033EB00C5CDA0 /* CurrentWeatherModel.swift in Sources */,
 				0902BF862B51344600C5CDA0 /* SearchVC + Location.swift in Sources */,
@@ -383,6 +410,7 @@
 				0902BF542B503DA200C5CDA0 /* ForecastModel.swift in Sources */,
 				0902BF672B5046D500C5CDA0 /* MainVC + Location.swift in Sources */,
 				0902BF8A2B51354300C5CDA0 /* GeoService.swift in Sources */,
+				09DD47532B53EEA2006929A4 /* SettingsVCViewModel.swift in Sources */,
 				0902BF882B5134ED00C5CDA0 /* SearchVC + SearchBar.swift in Sources */,
 				0902BF7E2B51250600C5CDA0 /* SearchVC + TableView.swift in Sources */,
 				0902BF472B5032F400C5CDA0 /* CurrentWeatherFetch.swift in Sources */,
@@ -394,11 +422,15 @@
 				0902BF772B50765500C5CDA0 /* CustomSpinner.swift in Sources */,
 				0902BF212B502E2D00C5CDA0 /* AppDelegate.swift in Sources */,
 				0902BF562B50405500C5CDA0 /* ForecastFetch.swift in Sources */,
+				09DD47552B53EEC6006929A4 /* SettingsCellViewModel.swift in Sources */,
 				0902BF6E2B504C5D00C5CDA0 /* CurrentWeatherFactory.swift in Sources */,
 				0902BF692B50479900C5CDA0 /* Coordinates.swift in Sources */,
+				09DD475D2B53F0C8006929A4 /* SettingsTableViewCell.swift in Sources */,
 				0902BF4E2B5036EB00C5CDA0 /* RestAPIClient.swift in Sources */,
 				0902BF8C2B5135AC00C5CDA0 /* Geocoding.swift in Sources */,
 				0902BF442B50321E00C5CDA0 /* MainCollectionViewCellViewModel.swift in Sources */,
+				09DD47572B53EEEF006929A4 /* Settings.swift in Sources */,
+				09DD475F2B53F347006929A4 /* OtherMeasurementsCell.swift in Sources */,
 				0902BF6B2B5047AA00C5CDA0 /* APIKey.swift in Sources */,
 				0902BF622B5044DA00C5CDA0 /* TabBarView.swift in Sources */,
 				0902BF232B502E2D00C5CDA0 /* SceneDelegate.swift in Sources */,

@@ -42,25 +42,5 @@ class ForecastRealm: Object {
         self.temp = temp
         self.latitude = latitude
         self.longitude = longitude
-        //self.weatherImage = weatherImage
     }
-    
-    
-//    convenience init(cityName: String, dayOrNight: String, weatherDescription: String, id: Int, temp: Double, latitude: Double, longitude: Double, tempMin: Double, tempMax: Double, pressure: Int, humidity: Int, windSpeed: Double, selectedItem: Int, date: String) {
-//        self.init()
-//        self.cityName = cityName
-//       // self.dayOrNight = dayOrNight
-//        self.weatherDescription = weatherDescription
-//        //self.id = id
-//        self.temp = temp
-//        //self.latitude = latitude
-//        //self.longitude = longitude
-//        //self.tempMin = tempMin
-//        //self.tempMax = tempMax
-//        //self.pressure = pressure
-//        //self.humidity = humidity
-//        //self.windSpeed = windSpeed
-//        //self.selectedItem = selectedItem
-//        //self.date = date
-//    }
 }

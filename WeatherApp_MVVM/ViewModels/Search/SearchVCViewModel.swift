@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import UIKit
 import RealmSwift
 
 class SearchVCViewModel {
     var isLoading: Observable<Bool> = Observable(false)
     var cellDataSource: Observable<[SearchCellViewModel]> = Observable(nil)
-    var currentWeatherDataSource: Observable<[SearchCellViewModel]> = Observable(nil)
-    var dataSource = [CurrentWeatherModel]()
+    var realmListener: Observable<[ForecastRealm]> = Observable(nil)
+    //var currentWeatherDataSource: Observable<[SearchCellViewModel]> = Observable(nil)
+    //var dataSource = [CurrentWeatherModel]()
     let currentWeatherService = CurrentWeatherFetch()
     let geoService = GeoService()
     lazy var realm = try! Realm()
@@ -42,36 +42,42 @@ class SearchVCViewModel {
         return 15
     }
     
+    var count = 0
     //-------
-    func updateWeatherIn(city: String, indexPath: IndexPath) {
+    func updateWeatherIn(city: String, indexPath: IndexPath, completion: @escaping () -> Void) {
+        isLoading.value = true
         print("OPS \(city)")
+        count += 1
+        print("СЧЕТЧИК = \(count)")
         self.geoService.searchCity(city) { cityResult in
             switch cityResult {
             case .success(let geoData):
                 guard let localName = geoData.first?.localNames?["ru"] else { return }
-                self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, latitude: self.forecastRealm[indexPath.section].latitude, units: UserDefaults.standard.string(forKey: "units") ?? "metric", language: .ru) { currentWeatherDataResult in
+                self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, latitude: self.forecastRealm[indexPath.section].latitude, units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { currentWeatherDataResult in
                     switch currentWeatherDataResult {
                     case .success(let weatherData):
-                        print("Погода в \(String(describing: weatherData.name)): \(String(describing: weatherData.weather?.first?.description)), температура = \(String(describing: weatherData.main?.temp))")
-                        let realmFactory = CurrentWeatherFactory.makeRealmModel(weatherData, cityName: localName)
-                        let weatherFactory = CurrentWeatherFactory.makeCurrentWeatherModelArray(weatherData)
-                        self.realmDataSource = realmFactory
-                        self.dataSource = weatherFactory
-                        print("indexPath: \(self.forecastRealm[indexPath.section].cityName)")
-                        DispatchQueue.main.async {
-                            do {
-                                try self.realm.write {
-                                    self.forecastRealm[indexPath.section].id = weatherData.weather?[0].id ?? 803
-                                    self.forecastRealm[indexPath.section].dayOrNight = String(weatherData.weather?[0].icon?.last ?? "d")
-                                    self.forecastRealm[indexPath.section].temp = weatherData.main?.temp?.rounded() ?? 0.0
-                                    self.forecastRealm[indexPath.section].latitude = weatherData.coord?.lat ?? 0.0
-                                    self.forecastRealm[indexPath.section].longitude = weatherData.coord?.lon ?? 0.0
-                                    self.forecastRealm[indexPath.section].weatherDescription = weatherData.weather?[0].description ?? ""
+                        if self.forecastRealm[indexPath.section].temp != weatherData.main?.temp?.rounded() ?? 0.0 || self.forecastRealm[indexPath.section].id != weatherData.weather?[0].id ?? 803 || self.forecastRealm[indexPath.section].weatherDescription != weatherData.weather?[0].description ?? "" ||
+                            self.forecastRealm[indexPath.section].dayOrNight != String(weatherData.weather?[0].icon?.last ?? "d") {
+                            let realmFactory = CurrentWeatherFactory.makeRealmModel(weatherData, cityName: localName)
+                            self.realmListener.value = realmFactory
+                            self.realmDataSource = realmFactory
+                            self.mapCellData()
+                            
+                            DispatchQueue.main.async {
+                                do {
+                                    try self.realm.write {
+                                        self.forecastRealm[indexPath.section].id = weatherData.weather?[0].id ?? 803
+                                        self.forecastRealm[indexPath.section].dayOrNight = String(weatherData.weather?[0].icon?.last ?? "d")
+                                        self.forecastRealm[indexPath.section].temp = weatherData.main?.temp?.rounded() ?? 0.0
+                                        self.forecastRealm[indexPath.section].weatherDescription = weatherData.weather?[0].description ?? ""
+                                    }
+                                }
+                                catch let error {
+                                    print("error when updating data in Realm: \(error.localizedDescription)")
                                 }
                             }
-                            catch let error {
-                                print("error when updating data in Realm: \(error.localizedDescription)")
-                            }
+                        } else {
+                            return
                         }
                     case .failure(let error):
                         print("error when gettting current weather: \(error.localizedDescription)")
@@ -79,19 +85,20 @@ class SearchVCViewModel {
                 }
             case .failure(let error):
                 print("error when searching city: \(error.localizedDescription)")
+                completion()
             }
         }
+        isLoading.value = false
     }
     
     func searchCity(city: String) {
-        isLoading.value = true
         self.geoService.searchCity(city) { cityResult in
             switch cityResult {
             case .success(let geoData):
                 guard let localName = geoData.first?.localNames?["ru"] else { return }
                 geoData.forEach {
                     guard let latitude = $0.lat, let longitude = $0.lon else { return }
-                    self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude, units: UserDefaults.standard.string(forKey: "units") ?? "metric", language: .ru) { currentWeatherResult in
+                    self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude, units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { currentWeatherResult in
                         switch currentWeatherResult {
                         case .success(let weather):
                             let realmFactory = CurrentWeatherFactory.makeRealmModel(weather, cityName: localName)
