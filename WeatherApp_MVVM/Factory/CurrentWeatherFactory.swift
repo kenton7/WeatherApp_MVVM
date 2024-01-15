@@ -7,13 +7,10 @@
 
 import Foundation
 
-class CurrentWeatherFactory {
+final class CurrentWeatherFactory {
+    
     class func makeCurrentWeatherModel(_ model: CurrentWeatherProtocol) -> CurrentWeatherModel {
         return CurrentWeatherModel(coord: model.coord, weather: model.weather, main: model.main, wind: model.wind, dt: model.dt, name: model.name)
-    }
-    
-    class func makeCurrentWeatherModelArray(_ model: CurrentWeatherProtocol) -> [CurrentWeatherModel] {
-        return [CurrentWeatherModel(coord: model.coord, weather: model.weather, main: model.main, wind: model.wind, dt: model.dt, name: model.name)]
     }
     
     class func makeRealmModel(_ model: CurrentWeatherProtocol, cityName: String?) -> [ForecastRealm] {

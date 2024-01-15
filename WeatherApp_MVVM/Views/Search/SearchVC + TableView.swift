@@ -25,7 +25,6 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func reloadTableView() {
-        print("RELOAD")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -41,8 +40,8 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.cellID, for: indexPath) as? SearchTableViewCell else {return UITableViewCell() }
-        viewModel.updateWeatherIn(city: viewModel.forecastRealm[indexPath.section].cityName, indexPath: indexPath, completion: reloadTableView)
-        
+        viewModel.updateWeatherIn(city: viewModel.forecastRealm[indexPath.section].cityName,
+                                  indexPath: indexPath, completion: reloadTableView)
         let realmViewModelCell = viewModel.forecastRealm[indexPath.section]
         cell.setupCellNew(realmViewModelCell)
         return cell
@@ -75,5 +74,30 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         return header
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .normal, title: nil) { UIContextualAction, _, completion in
+            self.viewModel.deleteDataFromRealm(indexPath: indexPath)
+            completion(true)
+        }
+        return viewModel.customDeleteButton(action: delete)
+    }
     
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? SearchTableViewCell {
+            cell.layer.cornerRadius = 15
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let factory: ViewControllerFactory = ForecastViewControllerFactory()
+        let forecastVC = factory.makeForecastViewController() as! ForecastVC
+        forecastVC.hidesBottomBarWhenPushed = false
+        let transferData = viewModel.forecastRealm[indexPath.section]
+        forecastVC.longitude = transferData.longitude
+        forecastVC.latitude = transferData.latitude
+        forecastVC.weatherImage.image = GetWeatherImage.weatherImages(id: transferData.id, pod: transferData.dayOrNight)
+//        viewModel.didSelectRow(indexPath: indexPath, data: viewModel.forecastRealm[indexPath.section])
+        navigationController?.pushViewController(forecastVC, animated: true)
+    }
 }

@@ -5,10 +5,10 @@
 //  Created by Илья Кузнецов on 11.01.2024.
 //
 
-import UIKit
+import UIKit.UIImage
 import Foundation
 
-class MainCollectionViewCellViewModel {
+final class MainCollectionViewCellViewModel {
     var time: String
     var image: UIImage
     var temperature: String
@@ -20,6 +20,4 @@ class MainCollectionViewCellViewModel {
         self.image = GetWeatherImage.weatherImages(id: data.weather!.first?.id ?? 803, pod: String(data.weather!.first?.icon?.last ?? "d"))
         self.temperature = "\(Int(data.main?.temp?.rounded() ?? 0))"
     }
-    
-    //MARK: TODO - загрузка с API
 }

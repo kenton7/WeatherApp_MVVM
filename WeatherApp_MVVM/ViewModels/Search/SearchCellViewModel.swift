@@ -7,12 +7,11 @@
 
 import Foundation
 
-class SearchCellViewModel {
+final class SearchCellViewModel {
     
     var forecastRealm: ForecastRealm?
     
     init(forecastRealm: ForecastRealm) {
         self.forecastRealm = forecastRealm
     }
-    
 }

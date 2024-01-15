@@ -26,5 +26,4 @@ extension SearchVC: CLLocationManagerDelegate {
         coordinates = Coordinates(latitude: locValue.latitude, longitude: locValue.longitude)
         manager.stopUpdatingLocation()
     }
-    
 }

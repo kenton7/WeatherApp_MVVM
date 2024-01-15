@@ -16,7 +16,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .black
+        tableView.separatorColor = .clear
         tableView.rowHeight = 60
         registerCell()
     }
@@ -62,7 +62,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        settingsViewModel.didSelectRowAt(indexPath: indexPath, completion: reloadTableView)
+    }
 }

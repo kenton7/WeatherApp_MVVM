@@ -13,9 +13,3 @@ enum MeasureType: String, CaseIterable {
     case wind = "Ветер"
     case pressure = "Давление"
 }
-
-struct Settings {
-    
-    var typeOfMeasurements: MeasureType
-    
-}

@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 import CoreLocation
 
-class SearchVC: UIViewController {
+final class SearchVC: UIViewController {
     
     let locationManager = CLLocationManager()
     var coordinates: Coordinates?
@@ -18,7 +18,7 @@ class SearchVC: UIViewController {
     var viewModel = SearchVCViewModel()
     private lazy var realm = try! Realm()
     
-    let locationButton: UIButton = {
+    private lazy var locationButton: UIButton = {
        let button = UIButton()
         button.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
@@ -28,15 +28,16 @@ class SearchVC: UIViewController {
         button.setImage(UIImage(named: "location"), for: .normal)
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(locationButtonPressed), for: .touchUpInside)
         return button
     }()
     
-    let searchBar: UISearchBar = {
+    lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         return searchBar
     }()
     
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         return tableView
     }()
@@ -70,6 +71,16 @@ class SearchVC: UIViewController {
         bindViewModel()        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindViewModel()
+    }
+    
+    @objc private func locationButtonPressed() {
+        viewModel.isLoading.value = true
+        viewModel.locationButtonPressed(longitude: coordinates?.longitude ?? 0.0, latitude: coordinates?.latitude ?? 0.0)
+    }
+    
     private func bindViewModel() {
         viewModel.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading = isLoading else { return }
@@ -78,17 +89,10 @@ class SearchVC: UIViewController {
             }
         }
         
-//        viewModel.currentWeatherDataSource.bind { [weak self] data in
-//            guard let self, let data = data else { return }
-//            cellDataSource = data
-//            reloadTableView()
-//        }
-
-        
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             realmDataSource = data
-            reloadTableView() // - из-за этого постоянное обновление ячеек и куча запросов в API
+            reloadTableView() 
         }
     }
     

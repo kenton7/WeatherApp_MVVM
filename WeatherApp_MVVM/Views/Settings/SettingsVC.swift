@@ -10,9 +10,8 @@ import UIKit
 final class SettingsVC: UIViewController {
     
     let settingsViewModel = SettingsVCViewModel()
-    var cellDataSource = [SettingsCellViewModel]()
     
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
@@ -25,8 +24,16 @@ final class SettingsVC: UIViewController {
         setupTableView()
     }
     
-    func bindViewModel() {
-        
+    @objc func windSegmentedControlPressed(segment: UISegmentedControl) {
+        let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
+        UserDefaults.standard.set(selectedParameter, forKey: MeasurementsTypes.wind.rawValue)
+        UserDefaults.standard.set(segment.selectedSegmentIndex, forKey: "windIndex")
+    }
+    
+    @objc func pressureSegmentedPressed(segment: UISegmentedControl) {
+        let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
+        UserDefaults.standard.set(selectedParameter, forKey: MeasurementsTypes.pressure.rawValue)
+        UserDefaults.standard.set(segment.selectedSegmentIndex, forKey: "pressureIndex")
     }
     
     private func setupViews() {

@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SearchTableViewCell: UITableViewCell {
+final class SearchTableViewCell: UITableViewCell {
 
     static let cellID = "SearchTableViewCell"
     
-    let weatherImage: UIImageView = {
+    private lazy var weatherImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
@@ -19,7 +19,7 @@ class SearchTableViewCell: UITableViewCell {
         return image
     }()
     
-    let cityLabel: UILabel = {
+    private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textAlignment = .center
@@ -29,7 +29,7 @@ class SearchTableViewCell: UITableViewCell {
         return label
     }()
     
-    let weatherDescriptionLabel: UILabel = {
+    private lazy var weatherDescriptionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .justified
         label.numberOfLines = 0
@@ -39,7 +39,7 @@ class SearchTableViewCell: UITableViewCell {
         return label
     }()
     
-    let temperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "--°"
         label.textAlignment = .right
@@ -50,7 +50,7 @@ class SearchTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
        let view = UIStackView()
         view.axis = .vertical
         view.alignment = .leading
@@ -59,12 +59,9 @@ class SearchTableViewCell: UITableViewCell {
         return view
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupViews()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -104,18 +101,10 @@ class SearchTableViewCell: UITableViewCell {
         ])
     }
     
-//    func setupCell(_ model: SearchCellViewModel, indexPath: IndexPath) {
-//        weatherImage.image = GetWeatherImage.weatherImages(id: model.currentWeather?.weather?[indexPath.row].id ?? 803, pod: String(model.currentWeather?.weather?.first?.icon?.last ?? "d"))
-//        cityLabel.text = model.currentWeather?.name
-//        temperatureLabel.text = "\(Int(model.currentWeather?.main?.temp?.rounded() ?? 0))°"
-//        weatherDescriptionLabel.text = model.currentWeather?.weather?[indexPath.row].description?.capitalizingFirstLetter()
-//    }
-    
     func setupCellNew(_ model: ForecastRealm) {
         weatherImage.image = GetWeatherImage.weatherImages(id: model.id, pod: model.dayOrNight)
         temperatureLabel.text = "\(Int(model.temp))°"
         weatherDescriptionLabel.text = model.weatherDescription.capitalizingFirstLetter()
         cityLabel.text = model.cityName
     }
-
 }

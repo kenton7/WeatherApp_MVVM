@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
 
-class MainViewModel {
+final class MainViewModel {
     var isLoading: Observable<Bool> = Observable(false)
     var cellDataSource: Observable<[MainCollectionViewCellViewModel]> = Observable(nil)
     var currentWeatherDataSource: Observable<CurrentWeatherModel> = Observable(nil)
@@ -17,7 +16,6 @@ class MainViewModel {
     let currentWeatherService = CurrentWeatherFetch()
     let forecastService = ForecastFetch()
     var isDay: Bool {
-        print(currentWeatherDataSource.value?.weather?.first?.icon?.last)
         return currentWeatherDataSource.value?.weather?.first?.icon?.last == "d" ? true : false
     }
     
@@ -34,18 +32,18 @@ class MainViewModel {
         let utilityQueue = DispatchQueue.global(qos: .utility)
         utilityQueue.async { [weak self] in
             guard let self else { return }
-            self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude, units: UserDefaults.standard.string(forKey: "units") ?? "metric", language: Language.ru) { [weak self] result in
+            self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude, 
+                                                         units: UserDefaults.standard.string(forKey: "units") ?? "metric",
+                                                         language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
                 case .success(let currentWeather):
                     self.isLoading.value = false
                     let factoryModel = CurrentWeatherFactory.makeCurrentWeatherModel(currentWeather)
                     currentWeatherDataSource.value = factoryModel
-                    
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-                
             }
         }
     }
@@ -77,7 +75,7 @@ class MainViewModel {
     func mapCellData() {
         for i in dataSource! {
             let date = i.dateString?.components(separatedBy: "-")
-            let separatedDate = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
+            _ = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
             cellDataSource.value = dataSource?.compactMap { MainCollectionViewCellViewModel($0) }
         }
     }

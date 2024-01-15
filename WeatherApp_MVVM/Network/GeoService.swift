@@ -9,11 +9,9 @@ import Foundation
 
 class GeoService {
     private let client: RestApiClient
-    //private let currentWeatherService: CurrentWeatherFetch
     
-    init(client: RestApiClient = .init()/*, currentWeatherService: CurrentWeatherFetch = .init()*/ ) {
+    init(client: RestApiClient = .init() ) {
         self.client = client
-        //self.currentWeatherService = currentWeatherService
     }
     
     func searchCity(_ city: String, completion: @escaping (Result<Geocoding, Error>) -> Void) {
@@ -33,31 +31,5 @@ class GeoService {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func weatherByGeo(city: String, completion: @escaping (Result<Geocoding, Error>) -> Void,
-                      handler: @escaping (Result<CurrentWeatherModel, Error>) -> Void) {
-        UserDefaults.standard.set(city, forKey: "city")
-        client.performRequest(WeatherEndpoints.geo(city: city)) { result in
-            switch result {
-            case .success(let data):
-                let city = try! JSONDecoder().decode(Geocoding.self, from: data)
-                completion(.success(city))
-                self.client.performRequest(WeatherEndpoints.currentWeather(latitude: city.first?.lat ?? 0.0, longitude: city.first!.lon ?? 0.0, units: UserDefaults.standard.string(forKey: "units") ?? "metric", lang: Language.ru)) { currentWeatherResult in
-                    switch currentWeatherResult {
-                    case .success(let data):
-                        let currentWeather = try! JSONDecoder().decode(CurrentWeatherModel.self, from: data)
-                        handler(.success(currentWeather))
-                    case .failure(let error):
-                        print("error when get current weather after searching city: \(error.localizedDescription)")
-                        handler(.failure(error))
-                    }
-                }
-            case .failure(let error):
-                print("error when get city: \(error.localizedDescription)")
-                completion(.failure(error))
-            }
-        }
-        
     }
 }

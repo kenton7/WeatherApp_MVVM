@@ -8,11 +8,11 @@
 import UIKit
 import CoreLocation
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
-    var weatherImage: UIImageView = {
+    private lazy var weatherImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
@@ -20,7 +20,7 @@ class MainViewController: UIViewController {
         return image
     }()
     
-    var weatherDescription: UILabel = {
+    private lazy var weatherDescription: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textAlignment = .center
@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    var temperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textAlignment = .center
@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    var cityLabel: UILabel = {
+    private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         var paragraphStyle = NSMutableParagraphStyle()
@@ -53,7 +53,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    var refreshButton: UIButton = {
+    private lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
@@ -67,7 +67,7 @@ class MainViewController: UIViewController {
         return button
     }()
     
-    private var dateLabel: UILabel = {
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         let date = Date()
         let df = DateFormatter()
@@ -86,7 +86,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let pressureImage: UIImageView = {
+    private lazy var pressureImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "pressure")
@@ -94,7 +94,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var pressureLabel: UILabel = {
+    private lazy var pressureLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "--"
@@ -104,7 +104,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let pressureName: UILabel = {
+    private lazy var pressureName: UILabel = {
         let label = UILabel()
         label.text = "Давление"
         label.font = UIFont.boldSystemFont(ofSize: 15)
@@ -115,7 +115,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let humidityImage: UIImageView = {
+    private lazy var humidityImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "insurance 1 (1)")
@@ -123,7 +123,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var humidityLabel: UILabel = {
+    private lazy var humidityLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "--"
@@ -133,7 +133,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let humidityName: UILabel = {
+    private lazy var humidityName: UILabel = {
         let label = UILabel()
         label.text = "Влажность"
         label.font = UIFont.boldSystemFont(ofSize: 15)
@@ -144,7 +144,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let windImage: UIImageView = {
+    private lazy var windImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "insurance 1 (2)")
@@ -152,7 +152,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var windLabel: UILabel = {
+    private lazy var windLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "--"
@@ -162,7 +162,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    let windName: UILabel = {
+    private lazy var windName: UILabel = {
         let label = UILabel()
         label.text = "Ветер"
         label.font = UIFont.boldSystemFont(ofSize: 15)
@@ -174,7 +174,7 @@ class MainViewController: UIViewController {
     }()
     
     //MARK: -- Stack Views
-    private var detailStackView: UIStackView = {
+    private lazy var detailStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
@@ -188,7 +188,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    private var weatherDataStackView: UIStackView = {
+    private lazy var weatherDataStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
@@ -198,18 +198,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    private var visibilityStackView: UIStackView = {
-        let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.alignment = .center
-        view.axis = .vertical
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = 8
-        view.spacing = 8
-        return view
-    }()
-    
-    private var humidityStackView: UIStackView = {
+    private lazy var visibilityStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
@@ -220,7 +209,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    private let winddStackView: UIStackView = {
+    private lazy var humidityStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
@@ -231,7 +220,18 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    let sevenDaysForecast: UILabel = {
+    private lazy var winddStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alignment = .center
+        view.axis = .vertical
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = 8
+        view.spacing = 8
+        return view
+    }()
+    
+    private lazy var sevenDaysForecast: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Прогноз"
@@ -244,7 +244,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    private let todayLabel: UILabel = {
+    private lazy var todayLabel: UILabel = {
         let label = UILabel()
         label.text = "Сегодня"
         label.font = UIFont.boldSystemFont(ofSize: 15)
@@ -257,7 +257,7 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -319,16 +319,14 @@ class MainViewController: UIViewController {
         viewModel.currentWeatherDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             DispatchQueue.main.async {
-                
                 self.animateBackground(state: String(data.weather?.first?.icon?.last ?? "d"))
                 
                 self.temperatureLabel.text = "\(Int(data.main?.temp?.rounded() ?? 0))°"
                 self.cityLabel.text = data.name
                 self.humidityLabel.text = "\(Int(data.main?.humidity ?? 0))%"
-                self.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) м/с"
+                self.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) \(UserDefaults.standard.string(forKey: "windTitle") ?? "м/с")"
                 self.weatherDescription.text = data.weather?.first?.description?.capitalizingFirstLetter()
-                self.pressureLabel.text = "\(data.main?.pressure ?? 0) мм.рт.ст."
-                self.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) мм.рт.ст."
+                self.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) \(UserDefaults.standard.string(forKey: "pressureTitle") ?? "мм.рт.ст.")"
                 self.weatherImage.image = GetWeatherImage.weatherImages(id: data.weather?.first?.id ?? 803, pod: String(data.weather?.first?.icon?.last ?? "d"))
             }
         }
@@ -396,11 +394,10 @@ class MainViewController: UIViewController {
                 let decodedCoordinates = try! JSONDecoder().decode(Coordinates.self, from: coordinates)
                 guard let self else { return }
                 self.viewModel.getCurrentWeather(longitude: decodedCoordinates.longitude, latitude: decodedCoordinates.latitude)
-                //self.viewModel.getForecast(longitude: decodedCoordinates.last!.longitude, latitude: decodedCoordinates.last!.latitude)
+                self.viewModel.getForecast(longitude: decodedCoordinates.longitude, latitude: decodedCoordinates.latitude)
             }
         }
     }
-
 }
 
 extension MainViewController {

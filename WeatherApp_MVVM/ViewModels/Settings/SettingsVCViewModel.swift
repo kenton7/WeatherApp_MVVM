@@ -20,7 +20,12 @@ enum MeasurementsTypes: String {
     case pressure = "pressureTitle"
 }
 
-class SettingsVCViewModel {
+enum TitlesForSections: String {
+    case temperature = "Температура"
+    case other = "Другие единицы измерения"
+}
+
+final class SettingsVCViewModel {
     
     private var selectedIndexPath: Int?
     
@@ -35,15 +40,15 @@ class SettingsVCViewModel {
     func titlesForSections(_ section: Int) -> String? {
         switch section {
         case 0:
-            return "Температура"
+            return TitlesForSections.temperature.rawValue
         case 1:
-            return "Другие единицы измерения"
+            return TitlesForSections.other.rawValue
         default:
             return ""
         }
     }
     
-    func didSelectRow(indexPath: IndexPath, viewModel: SettingsVCViewModel) {
+    func didSelectRowAt(indexPath: IndexPath, completion: @escaping () -> Void) {
         if indexPath.section == 0 {
             selectedIndexPath = indexPath.row
             
@@ -54,6 +59,7 @@ class SettingsVCViewModel {
             }
             UserDefaults.standard.setValue(selectedIndexPath, forKey: "selectedItem")
             UserDefaults.standard.synchronize()
+            completion()
         }
     }
 }

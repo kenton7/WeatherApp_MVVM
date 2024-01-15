@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarView: UITabBar {
+final class TabBarView: UITabBar {
     
     private var shapeLayer: CAShapeLayer?
     var centeredWidth: CGFloat = 0
@@ -15,7 +15,6 @@ class TabBarView: UITabBar {
     override func draw(_ rect: CGRect) {
         centeredWidth = self.bounds.width / 6
         //centeredWidth = self.bounds.origin.x
-        
         self.unselectedItemTintColor = .white
         self.tintColor = .white
         self.addShape()

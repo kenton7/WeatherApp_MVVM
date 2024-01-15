@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherCollectionViewCell: UICollectionViewCell {
+final class WeatherCollectionViewCell: UICollectionViewCell {
     
     static let cellID = "WeatherCollectionViewCell"
     
@@ -19,7 +19,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let timeLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textColor = .white
@@ -29,7 +29,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let weatherIcon: UIImageView = {
+    private lazy var weatherIcon: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "sun")
@@ -37,7 +37,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    let temperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textColor = .white
@@ -47,7 +47,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.alignment = .center

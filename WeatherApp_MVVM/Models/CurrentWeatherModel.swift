@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 protocol CurrentWeatherProtocol {
     var coord: Coord? { get }
     var weather: [Weather]? { get }

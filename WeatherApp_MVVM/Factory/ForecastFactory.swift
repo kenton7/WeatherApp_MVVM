@@ -7,8 +7,18 @@
 
 import Foundation
 
-class ForecastFactory {
+final class ForecastFactory {
+    
+    class func makeForecastModelFromList(_ model: List) -> ForecastModel {
+        return ForecastModel()
+    }
+
     class func makeForecastModel(_ model: WeatherModelProtocol) -> ForecastModel {
         return ForecastModel(list: model.list, city: model.city)
     }
+    
+    class func makeForecastModelArray(_ model: WeatherModelProtocol) -> [ForecastModel] {
+        return [ForecastModel(list: model.list, city: model.city)]
+    }
+    
 }

@@ -16,7 +16,10 @@ class GetWeatherImage {
     ///   - pod: символ "d" (day) или "n" (night). Выбирается либо дневная картинка, либо ночная
     /// - Returns: Возвращает полученную картинку
     class func weatherImages(id: Int, pod: String?) -> UIImage {
-        guard let pod else { return UIImage(named: "cloudy-weather")! }
+        guard let pod else {
+            print("Не удалось определить картинку погоды по pod \(String(describing: pod))")
+            return UIImage(named: "cloudy-weather")!
+        }
         switch id {
         case 200...232:
             if pod == "n" {

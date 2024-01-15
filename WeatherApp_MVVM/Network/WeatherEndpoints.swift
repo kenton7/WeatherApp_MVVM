@@ -39,7 +39,6 @@ enum WeatherEndpoints: URLRequestConvertable {
                 "units": "\(units)"
             ]
         case .geo(let city):
-            print(city)
             return ["q": "\(city)", "limit": "1", "appid": "\(APIKey.apiKey)"]
         }
     }

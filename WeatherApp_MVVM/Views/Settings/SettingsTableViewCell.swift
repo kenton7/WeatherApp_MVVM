@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+final class SettingsTableViewCell: UITableViewCell {
     
     static let cellID = "SettingsTableViewCell"
     
-    let temperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
        let label = UILabel()
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +47,10 @@ class SettingsTableViewCell: UITableViewCell {
     
     func setupCell(indexPath: IndexPath) {
         temperatureLabel.text = MeasureType.allCases[indexPath.row].rawValue
+        if indexPath.row == UserDefaults.standard.integer(forKey: "selectedItem") {
+            accessoryType = .checkmark
+        } else {
+            accessoryType = .none
+        }
     }
-    
 }

@@ -80,7 +80,6 @@ final class RestApiClient {
         default:
             break
         }
-        
         return nil
     }
     
