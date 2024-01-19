@@ -234,6 +234,7 @@ final class ForecastVC: UIViewController {
         
         guard let latitude, let longitude else { return }
         viewModel.getForeast(longitude: longitude, latitude: latitude)
+        viewModel.getCurrentWeather(longitude: longitude, latitude: latitude)
     }
     
     private func setupViews() {
@@ -303,13 +304,21 @@ final class ForecastVC: UIViewController {
             }
         }
         
+        viewModel.currentWeatherDataSource.bind { [weak self] currentWeather in
+            guard let self, let currentWeather = currentWeather else { return }
+            DispatchQueue.main.async {
+                self.maxTemperatureLabel.text = "\(Int(currentWeather.main?.tempMax?.rounded() ?? 0.0))°"
+                self.minTemperaureLabel.text = "/\(Int(currentWeather.main?.tempMin?.rounded() ?? 0.0))°"
+            }
+        }
+        
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             cellDataSource = data
-            DispatchQueue.main.async {
-                self.maxTemperatureLabel.text = "\(self.cellDataSource.first?.forecastModel.maxTemp ?? 0)°"
-                self.minTemperaureLabel.text = "/\(self.cellDataSource.first?.forecastModel.minTemp ?? 0)°"
-            }
+//            DispatchQueue.main.async {
+//                self.maxTemperatureLabel.text = "\(self.cellDataSource.first?.forecastModel.maxTemp ?? 0)°"
+//                self.minTemperaureLabel.text = "/\(self.cellDataSource.first?.forecastModel.minTemp ?? 0)°"
+//            }
             
             viewModel.forecastDataSource.bind { [weak self] data in
                 guard let self, let data = data else { return }

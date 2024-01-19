@@ -15,6 +15,9 @@ final class ForecastViewModel {
     let forecastService = ForecastFetch()
     var forecastData = [ForecastModelNew]()
     var cellDataSource: Observable<[ForecastCellViewModel]> = Observable(nil)
+    var currentWeatherService = CurrentWeatherFetch()
+    var currentWeatherDataSource: Observable<CurrentWeatherModel> = Observable(nil)
+    
     
     
     func numberOfSections() -> Int {
@@ -27,6 +30,20 @@ final class ForecastViewModel {
     
     func heightForRow() -> CGFloat {
         return 60
+    }
+    
+    func getCurrentWeather(longitude: Double, latitude: Double) {
+        currentWeatherService.getCurrentWeather(longitute: longitude,
+                                                latitude: latitude,
+                                                units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                language: .ru) { currentWeatherResult in
+            switch currentWeatherResult {
+            case .success(let weatherData):
+                self.currentWeatherDataSource.value = weatherData
+            case .failure(let error):
+                print("error when getting current weather: \(error.localizedDescription)")
+            }
+        }
     }
     
     func getForeast(longitude: Double, latitude: Double) {
@@ -78,6 +95,7 @@ final class ForecastViewModel {
                         df.timeZone = .current
                         let date = Date(timeIntervalSince1970: Double(data.dt ?? 0))
                         let dateString = df.string(from: date)
+                        print("maxTemp: \(Int(data.main?.tempMax?.rounded() ?? 0.0))")
                         self.forecastData.append(ForecastModelNew(maxTemp: Int(data.main?.tempMax?.rounded() ?? 0.0), minTemp: Int(data.main?.tempMin?.rounded() ?? 0.0), weatherID: data.weather?.first?.id ?? 0, weatherDescriptionFromServer: data.weather?.first?.description?.capitalizingFirstLetter() ?? "", date: dateString.capitalizingFirstLetter(), dayOrNight: String(data.weather?.first?.icon?.last ?? "d")))
                     }
                     self.mapCellData()
