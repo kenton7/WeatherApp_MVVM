@@ -332,7 +332,6 @@ final class MainViewController: UIViewController {
         }
     }
 
-    
     private func setupViews() {
         view.addSubview(collectionView)
         view.addSubview(weatherImage)

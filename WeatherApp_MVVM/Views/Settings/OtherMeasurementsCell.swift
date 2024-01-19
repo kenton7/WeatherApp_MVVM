@@ -20,7 +20,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         return label
     }()
     
-    private lazy var segmentedControlForWind: UISegmentedControl = {
+    private var segmentedControlForWind: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: [
             MeasurementsTypes.metersPerSecond.rawValue,
             MeasurementsTypes.kilometerPerHour.rawValue,
@@ -33,7 +33,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         return segmentedControl
     }()
     
-    private lazy var segmetedControlForPressure: UISegmentedControl = {
+    private var segmetedControlForPressure: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: [
             MeasurementsTypes.mmRtSt.rawValue,
             MeasurementsTypes.hPa.rawValue,

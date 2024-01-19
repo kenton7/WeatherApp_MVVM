@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 class CalculateMeasurements {
     /// Функция переводит давление в другую систему исчисления
     /// - Parameters:

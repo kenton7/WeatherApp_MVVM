@@ -20,5 +20,4 @@ final class ForecastFactory {
     class func makeForecastModelArray(_ model: WeatherModelProtocol) -> [ForecastModel] {
         return [ForecastModel(list: model.list, city: model.city)]
     }
-    
 }
