@@ -18,8 +18,6 @@ final class ForecastViewModel {
     var currentWeatherService = CurrentWeatherFetch()
     var currentWeatherDataSource: Observable<CurrentWeatherModel> = Observable(nil)
     
-    
-    
     func numberOfSections() -> Int {
         return forecastData.count
     }
@@ -95,7 +93,6 @@ final class ForecastViewModel {
                         df.timeZone = .current
                         let date = Date(timeIntervalSince1970: Double(data.dt ?? 0))
                         let dateString = df.string(from: date)
-                        print("maxTemp: \(Int(data.main?.tempMax?.rounded() ?? 0.0))")
                         self.forecastData.append(ForecastModelNew(maxTemp: Int(data.main?.tempMax?.rounded() ?? 0.0), minTemp: Int(data.main?.tempMin?.rounded() ?? 0.0), weatherID: data.weather?.first?.id ?? 0, weatherDescriptionFromServer: data.weather?.first?.description?.capitalizingFirstLetter() ?? "", date: dateString.capitalizingFirstLetter(), dayOrNight: String(data.weather?.first?.icon?.last ?? "d")))
                     }
                     self.mapCellData()

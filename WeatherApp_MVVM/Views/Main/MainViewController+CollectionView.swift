@@ -12,18 +12,18 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        mainScreenViews.collectionView.delegate = self
+        mainScreenViews.collectionView.dataSource = self
         registerCell()
     }
     
     func registerCell() {
-        collectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.cellID)
+        mainScreenViews.collectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.cellID)
     }
     
     func reloadCollectionView() {
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.mainScreenViews.collectionView.reloadData()
         }
     }
     

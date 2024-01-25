@@ -11,23 +11,23 @@ import UIKit
 extension ForecastVC: UITableViewDelegate, UITableViewDataSource {
     
     func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .clear
-        tableView.backgroundColor = .clear
-        tableView.isUserInteractionEnabled = false
+        forecastScreenViews.tableView.delegate = self
+        forecastScreenViews.tableView.dataSource = self
+        forecastScreenViews.tableView.translatesAutoresizingMaskIntoConstraints = false
+        forecastScreenViews.tableView.showsVerticalScrollIndicator = false
+        forecastScreenViews.tableView.separatorColor = .clear
+        forecastScreenViews.tableView.backgroundColor = .clear
+        forecastScreenViews.tableView.isUserInteractionEnabled = false
         registerCell()
     }
     
     func registerCell() {
-        tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: ForecastTableViewCell.cellID)
+        forecastScreenViews.tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: ForecastTableViewCell.cellID)
     }
     
     func reloadTableView() {
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.forecastScreenViews.tableView.reloadData()
         }
     }
     

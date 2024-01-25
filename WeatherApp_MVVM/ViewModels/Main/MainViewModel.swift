@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIView
 
 final class MainViewModel {
     var isLoading: Observable<Bool> = Observable(false)
@@ -77,6 +78,16 @@ final class MainViewModel {
             let date = i.dateString?.components(separatedBy: "-")
             _ = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
             cellDataSource.value = dataSource?.compactMap { MainCollectionViewCellViewModel($0) }
+        }
+    }
+    
+    func animateBackground(state: String, view: UIView) {
+        guard let nightImage = UIImage(named: "nightSky"), let dayImage = UIImage(named: "BackgroundImage") else { return }
+        
+        if state == "d" {
+            view.animateBackground(image: dayImage, on: view)
+        } else {
+            view.animateBackground(image: nightImage, on: view)
         }
     }
 }

@@ -11,22 +11,22 @@ import UIKit
 extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .clear
+        searchScreenViews.tableView.delegate = self
+        searchScreenViews.tableView.dataSource = self
+        searchScreenViews.tableView.translatesAutoresizingMaskIntoConstraints = false
+        searchScreenViews.tableView.backgroundColor = .clear
+        searchScreenViews.tableView.showsVerticalScrollIndicator = false
+        searchScreenViews.tableView.separatorColor = .clear
         registerCell()
     }
     
     func registerCell() {
-        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.cellID)
+        searchScreenViews.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.cellID)
     }
     
     func reloadTableView() {
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.searchScreenViews.tableView.reloadData()
         }
     }
     
@@ -96,7 +96,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         let transferData = viewModel.forecastRealm[indexPath.section]
         forecastVC.longitude = transferData.longitude
         forecastVC.latitude = transferData.latitude
-        forecastVC.weatherImage.image = GetWeatherImage.weatherImages(id: transferData.id, pod: transferData.dayOrNight)
+        forecastVC.forecastScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: transferData.id, pod: transferData.dayOrNight)
 //        viewModel.didSelectRow(indexPath: indexPath, data: viewModel.forecastRealm[indexPath.section])
         navigationController?.pushViewController(forecastVC, animated: true)
     }

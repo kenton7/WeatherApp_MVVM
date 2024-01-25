@@ -19,8 +19,8 @@ extension MainViewController: CLLocationManagerDelegate {
             locationManager.requestLocation()
             DispatchQueue.main.async {
                 self.viewModel.getCurrentWeather(longitude: self.coordinates?.longitude ?? 0.0, latitude: self.coordinates?.latitude ?? 0.0)
-                self.spinner.isHidden = false
-                self.spinner.startAnimation(delay: 0.0, replicates: 20)
+                self.mainScreenViews.spinner.isHidden = false
+                self.mainScreenViews.spinner.startAnimation(delay: 0.0, replicates: 20)
             }
         }
     }
@@ -34,7 +34,7 @@ extension MainViewController: CLLocationManagerDelegate {
         } catch {
             print("Error encoding coordinates: \(error)")
         }
-        self.spinner.isHidden = false
+        self.mainScreenViews.spinner.isHidden = false
         viewModel.getCurrentWeather(longitude: locValue.longitude, latitude: locValue.latitude)
         viewModel.getForecast(longitude: locValue.longitude, latitude: locValue.latitude)
         manager.stopUpdatingLocation()
