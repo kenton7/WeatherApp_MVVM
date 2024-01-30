@@ -68,10 +68,11 @@ final class MainViewController: UIViewController {
     
     //MARK: - Refresh button pressed method
     @objc private func refreshButtonPressed() {
-        if let coordinates = CoordinatesDecoder.decodeCoordinates(with: UserDefaults.standard.data(forKey: "coordinates")) {
-            self.viewModel.getCurrentWeather(longitude: coordinates.longitude, latitude: coordinates.latitude)
-            self.viewModel.getForecast(longitude: coordinates.longitude, latitude: coordinates.latitude)
-        }
+        locationManager.startUpdatingLocation()
+        guard let longitude = locationManager.location?.coordinate.longitude, 
+                let latitude = locationManager.location?.coordinate.latitude else { return }
+        viewModel.getCurrentWeather(longitude: longitude, latitude: latitude)
+        viewModel.getForecast(longitude: longitude, latitude: latitude)
     }
 }
 
