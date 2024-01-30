@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "FEF65501-551A-4762-9484-9FBD25BAADE4"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA897A0D-955A-485C-A107-FC91791A27D0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/ViewModels/MainVC/MainViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "MainViewModel"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D022743-D641-4719-BD44-AFF39079D2C6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/Views/Search/SearchVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "bindViewModel()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D022743-D641-4719-BD44-AFF39079D2C6 - 2fdb52f73537a227"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Array&lt;WeatherApp_MVVM.ForecastRealm&gt;&gt;) -&gt; () in WeatherApp_MVVM.SearchVC.bindViewModel() -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/Views/Search/SearchVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "748">
+               </Location>
+               <Location
+                  uuid = "3D022743-D641-4719-BD44-AFF39079D2C6 - a8ec6f557c3f1e15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Array&lt;WeatherApp_MVVM.SearchCellViewModel&gt;&gt;) -&gt; () in WeatherApp_MVVM.SearchVC.bindViewModel() -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/Views/Search/SearchVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "656">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "818061C7-1FA3-4B8B-A0BD-C0AA916BFEDD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "searchCity(city:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C2261103-ADBF-49C4-B533-66E4F5129640"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "updateWeatherIn(city:indexPath:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C2261103-ADBF-49C4-B533-66E4F5129640 - ed4c5357b29b8849"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "1396">
+               </Location>
+               <Location
+                  uuid = "C2261103-ADBF-49C4-B533-66E4F5129640 - ed4c5357b29b8828"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "1396">
+               </Location>
+               <Location
+                  uuid = "C2261103-ADBF-49C4-B533-66E4F5129640 - ed4c5357b29b8828"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "1412">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "79216BD8-1E99-4643-80F2-BBB19E2C4A2E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "updateWeatherIn(city:indexPath:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "79216BD8-1E99-4643-80F2-BBB19E2C4A2E - 827c98d6faa49fa5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "308">
+               </Location>
+               <Location
+                  uuid = "79216BD8-1E99-4643-80F2-BBB19E2C4A2E - b7c089ba319a3eac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "212">
+               </Location>
+               <Location
+                  uuid = "79216BD8-1E99-4643-80F2-BBB19E2C4A2E - 827c98d6faa49fa5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "576">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F1A2E71-D0D5-4BC8-8866-257824F64564"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "updateWeatherIn(city:indexPath:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9F1A2E71-D0D5-4BC8-8866-257824F64564 - d5de3e7d2c856eb9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "204">
+               </Location>
+               <Location
+                  uuid = "9F1A2E71-D0D5-4BC8-8866-257824F64564 - 52a4f7a3087ce878"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "9F1A2E71-D0D5-4BC8-8866-257824F64564 - ed4c5357b29b8b6e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "2520">
+               </Location>
+               <Location
+                  uuid = "9F1A2E71-D0D5-4BC8-8866-257824F64564 - d5de3e7d2c856ed8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;WeatherApp_MVVM.CurrentWeatherModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;WeatherApp_MVVM.GeocodingElement&gt;, Swift.Error&gt;) -&gt; () in WeatherApp_MVVM.SearchVCViewModel.updateWeatherIn(city: Swift.String, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp_MVVM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilya/Desktop/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20Xcode/WeatherApp_MVVM/WeatherApp_MVVM/ViewModels/SearchVC/SearchVCViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "204">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
