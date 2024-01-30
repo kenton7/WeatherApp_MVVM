@@ -20,7 +20,6 @@ extension MainViewController: CLLocationManagerDelegate {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
             DispatchQueue.main.async {
-                self.viewModel.getCurrentWeather(longitude: self.coordinates?.longitude ?? 0.0, latitude: self.coordinates?.latitude ?? 0.0)
                 self.mainScreenViews.spinner.isHidden = false
                 self.mainScreenViews.spinner.startAnimation(delay: 0.0, replicates: 20)
             }
