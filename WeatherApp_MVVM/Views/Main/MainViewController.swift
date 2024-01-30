@@ -27,12 +27,7 @@ final class MainViewController: UIViewController {
         
         setupCollectionView()
         bindViewModel()
-        
         mainScreenViews.refreshButton.addTarget(self, action: #selector(refreshButtonPressed), for: .touchUpInside)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setupAndStartLocationManager()
     }
     
@@ -47,7 +42,7 @@ final class MainViewController: UIViewController {
         
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
-            cellDataSource = data
+            self.cellDataSource = data
             reloadCollectionView()
         }
         
@@ -61,7 +56,8 @@ final class MainViewController: UIViewController {
                 self.mainScreenViews.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) \(UserDefaults.standard.string(forKey: "windTitle") ?? "м/с")"
                 self.mainScreenViews.weatherDescription.text = data.weather?.first?.description?.capitalizingFirstLetter()
                 self.mainScreenViews.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) \(UserDefaults.standard.string(forKey: "pressureTitle") ?? "мм.рт.ст.")"
-                self.mainScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: data.weather?.first?.id ?? 803, pod: String(data.weather?.first?.icon?.last ?? "d"))
+                self.mainScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: data.weather?.first?.id ?? 803, 
+                                                                                        pod: String(data.weather?.first?.icon?.last ?? "d"))
             }
         }
     }

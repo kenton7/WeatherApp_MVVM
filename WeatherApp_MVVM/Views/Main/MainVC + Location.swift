@@ -19,10 +19,10 @@ extension MainViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
-            DispatchQueue.main.async {
-                self.mainScreenViews.spinner.isHidden = false
-                self.mainScreenViews.spinner.startAnimation(delay: 0.0, replicates: 20)
-            }
+//            DispatchQueue.main.async {
+//                self.mainScreenViews.spinner.isHidden = false
+//                self.mainScreenViews.spinner.startAnimation(delay: 0.0, replicates: 20)
+//            }
         }
     }
     

@@ -88,11 +88,13 @@ extension UIView {
     func animateBackground(image: UIImage, on view: UIView) {
         
         //фильтруем subviews по тегам, чтобы удалить только картинки заднего фона при повторном запуске фукнкции
-        view.subviews.filter {
-            $0.tag == 100 || $0.tag == 101
-        }.forEach {
-            $0.removeFromSuperview()
-        }
+//        view.subviews.filter {
+//            $0.tag == 100 || $0.tag == 101
+//        }.forEach {
+//            $0.removeFromSuperview()
+//        }
+        
+       view.layer.removeAllAnimations() // код выше закомментил, потому что вызывал баг с сильной нагрузкой процессора, заменил этой строкой и все ок
         
         // ширина экрана
         let imageViewWidth = view.frame.size.width

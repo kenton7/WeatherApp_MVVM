@@ -19,12 +19,6 @@ final class TabBarController: UITabBarController {
         self.selectedIndex = 0
     }
     
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-    }
-    
     //MARK: - Setup controllers
     func setupVCs() {
         viewControllers = [

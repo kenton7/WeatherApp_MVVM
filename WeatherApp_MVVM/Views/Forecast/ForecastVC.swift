@@ -63,6 +63,7 @@ final class ForecastVC: UIViewController {
             DispatchQueue.main.async {
                 self.forecastScreenViews.maxTemperatureLabel.text = "\(Int(currentWeather.main?.tempMax?.rounded() ?? 0.0))°"
                 self.forecastScreenViews.minTemperaureLabel.text = "/\(Int(currentWeather.main?.tempMin?.rounded() ?? 0.0))°"
+                self.forecastScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: currentWeather.weather?.first?.id ?? 803, pod: String(currentWeather.weather?.first?.icon?.last ?? "d"))
             }
         }
         

@@ -35,26 +35,13 @@ final class SearchVC: UIViewController {
         bindViewModel()        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        bindViewModel()
-    }
-    
     //MARK: - Location button pressed method
     @objc func locationButtonPressed(sender: UIButton) {
-        viewModel.isLoading.value = true
         viewModel.locationButtonPressed(longitude: coordinates?.longitude ?? 0.0, latitude: coordinates?.latitude ?? 0.0)
     }
     
     //MARK: - Binding
     private func bindViewModel() {
-        viewModel.isLoading.bind { [weak self] isLoading in
-            guard let self, let isLoading = isLoading else { return }
-            DispatchQueue.main.async {
-                isLoading ? self.searchScreenViews.spinner.startAnimation(delay: 0.0, replicates: 20) : self.searchScreenViews.spinner.stopAnimation()
-            }
-        }
-        
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             realmDataSource = data
