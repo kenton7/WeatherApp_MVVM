@@ -13,7 +13,6 @@ final class SearchVC: UIViewController {
     
     let locationManager = CLLocationManager()
     var coordinates: Coordinates?
-    var cellDataSource = [SearchCellViewModel]()
     var realmDataSource = [SearchCellViewModel]()
     var viewModel = SearchVCViewModel()
     private lazy var realm = try! Realm()
@@ -27,12 +26,17 @@ final class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupLocation()
+        //setupLocation()
         viewModel.forecastRealm = self.realm.objects(ForecastRealm.self)
         
         setupTableView()
         setupSearchBar()
-        bindViewModel()        
+        bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLocation()
     }
     
     //MARK: - Location button pressed method

@@ -10,11 +10,7 @@ import UIKit
 final class SettingsVC: UIViewController {
     
     let settingsViewModel = SettingsVCViewModel()
-    
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        return tableView
-    }()
+    lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()

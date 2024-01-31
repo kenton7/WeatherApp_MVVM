@@ -63,6 +63,7 @@ final class ForecastViewModel {
                 let calendar = Calendar.current
                 let df = DateFormatter()
                 
+                self.forecastData.removeAll()
                 let factory = ForecastFactory.makeForecastModelArray(forecast)
                 self.forecastDataSource.value = factory
                 self.forecast = factory

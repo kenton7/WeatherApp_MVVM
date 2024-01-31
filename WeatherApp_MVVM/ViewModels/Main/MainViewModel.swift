@@ -38,7 +38,7 @@ final class MainViewModel {
         isLoading.value = true
         DispatchQueue.global(qos: .userInteractive).async {
             self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude,
-                                                         units: UserDefaults.standard.string(forKey: "units") ?? "metric",
+                                                         units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                          language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -60,7 +60,7 @@ final class MainViewModel {
             guard let self else { return }
             self.forecastService.getForecast(longitude: longitude,
                                              latitude: latitude,
-                                             units: UserDefaults.standard.string(forKey: "units") ?? "metric",
+                                             units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
                                              language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {

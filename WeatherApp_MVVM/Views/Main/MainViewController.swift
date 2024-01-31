@@ -28,6 +28,11 @@ final class MainViewController: UIViewController {
         setupCollectionView()
         bindViewModel()
         mainScreenViews.refreshButton.addTarget(self, action: #selector(refreshButtonPressed), for: .touchUpInside)
+        //setupAndStartLocationManager()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupAndStartLocationManager()
     }
     
