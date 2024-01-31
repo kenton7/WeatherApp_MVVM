@@ -86,7 +86,7 @@ extension String {
 //MARK: - UIView
 extension UIView {
     
-    func animateBack(imageView1: UIImageView, imageView2: UIImageView, view: UIView) {
+    func animateImages(imageView1: UIImageView, imageView2: UIImageView, view: UIView) {
         UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear]) {
             imageView1.frame = imageView1.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
             imageView2.frame = imageView2.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
@@ -112,7 +112,7 @@ extension UIView {
             if imageView2.frame.origin.x <= -view.frame.size.width {
                 imageView2.frame.origin.x = view.frame.size.width
             }
-            self.animateBack(imageView1: imageView1, imageView2: imageView2, view: view)
+            self.animateImages(imageView1: imageView1, imageView2: imageView2, view: view)
         }
     }
     
@@ -129,15 +129,8 @@ extension UIView {
             imageView2.tag = 101
             view.insertSubview(imageView2, at: 0)
             
-            animateBack(imageView1: imageView1, imageView2: imageView2, view: view)
+            animateImages(imageView1: imageView1, imageView2: imageView2, view: view)
             return
         }
-        imageView1.layer.removeAllAnimations()
-        imageView2.layer.removeAllAnimations()
-        imageView1.image = image
-        imageView2.image = image
-        imageView1.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        imageView2.frame = CGRect(x: view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        imageView2.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }
