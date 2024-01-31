@@ -43,6 +43,7 @@ extension SearchVC {
         }
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
+        locationManager.stopUpdatingLocation()
         reloadTableView()
     }
 }

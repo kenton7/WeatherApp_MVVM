@@ -85,64 +85,59 @@ extension String {
 
 //MARK: - UIView
 extension UIView {
-    func animateBackground(image: UIImage, on view: UIView) {
-        
-        //фильтруем subviews по тегам, чтобы удалить только картинки заднего фона при повторном запуске фукнкции
-//        view.subviews.filter {
-//            $0.tag == 100 || $0.tag == 101
-//        }.forEach {
-//            $0.removeFromSuperview()
-//        }
-        
-       view.layer.removeAllAnimations() // код выше закомментил, потому что вызывал баг с сильной нагрузкой процессора, заменил этой строкой и все ок
-        
-        // ширина экрана
-        let imageViewWidth = view.frame.size.width
-        // высота экрана
-        let imageViewHeight = view.frame.size.height
-        
-        let backgroundImageView1 = UIImageView(image: image)
-        backgroundImageView1.frame = CGRect(x: 0, y: 0, width: imageViewWidth, height: imageViewHeight)
-        backgroundImageView1.tag = 100 // устанавливаем тег для первого изображения
-        view.insertSubview(backgroundImageView1, at: 0)
-        
-        let backgroundImageView2 = UIImageView(image: image)
-        backgroundImageView2.frame = CGRect(x: imageViewWidth, y: 0, width: imageViewWidth, height: imageViewHeight)
-        backgroundImageView2.transform = CGAffineTransform(scaleX: -1, y: 1) // отзеркаливаем вторую картинку, чтобы создать иллюзию бесшовного перехода
-        backgroundImageView2.tag = 101 // устанавливаем тег для второго изображения
-        view.insertSubview(backgroundImageView2, at: 0)
-        
-        func animateImage() {
-            UIView.animate(withDuration: 30.0, delay: 0.0, options: [.curveLinear], animations: {
-                // Двигаем картинки влево
-                backgroundImageView1.frame = backgroundImageView1.frame.offsetBy(dx: -imageViewWidth, dy: 0)
-                backgroundImageView2.frame = backgroundImageView2.frame.offsetBy(dx: -imageViewWidth, dy: 0)
-            }) { _ in
-                /*
-                 Данный участок кода отвечает за проверку позиции изображений backgroundImageView1 и backgroundImageView2 по оси X после анимации.
-                 Если позиция по оси X уходит за пределы отрицательного значения, что означает,
-                 что изображение полностью ушло за границы видимой области влево,
-                 то его положение сбрасывается на начальное положение.
-
-                 Рассмотрим подробнее:
-                 backgroundImageView1.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView1.
-                 backgroundImageView2.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView2.
-                 imageViewWidth - это ширина видимой области (ширина экрана или контейнера для анимации).
-                 Таким образом, если backgroundImageView1 или backgroundImageView2 выходят за левую границу видимой области
-                 (то есть их X-координата меньше или равна -imageViewWidth), их положение сбрасывается на imageViewWidth,
-                 чтобы создать эффект бесшовного движения. Это позволяет изображению переместиться "вне экрана"
-                 и мгновенно вернуться на начальное положение, создавая иллюзию непрерывного движения.
-                 */
-                if backgroundImageView1.frame.origin.x <= -imageViewWidth {
-                    backgroundImageView1.frame.origin.x = imageViewWidth
-                }
-                if backgroundImageView2.frame.origin.x <= -imageViewWidth {
-                    backgroundImageView2.frame.origin.x = imageViewWidth
-                }
-                // Повторяем анимацию
-                animateImage()
+    
+    func animateBack(imageView1: UIImageView, imageView2: UIImageView, view: UIView) {
+        UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear]) {
+            imageView1.frame = imageView1.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
+            imageView2.frame = imageView2.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
+        } completion: { _ in
+            //                /*
+            //                 Данный участок кода отвечает за проверку позиции изображений backgroundImageView1 и backgroundImageView2 по оси X после анимации.
+            //                 Если позиция по оси X уходит за пределы отрицательного значения, что означает,
+            //                 что изображение полностью ушло за границы видимой области влево,
+            //                 то его положение сбрасывается на начальное положение.
+            //
+            //                 Рассмотрим подробнее:
+            //                 backgroundImageView1.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView1.
+            //                 backgroundImageView2.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView2.
+            //                 imageViewWidth - это ширина видимой области (ширина экрана или контейнера для анимации).
+            //                 Таким образом, если backgroundImageView1 или backgroundImageView2 выходят за левую границу видимой области
+            //                 (то есть их X-координата меньше или равна -imageViewWidth), их положение сбрасывается на imageViewWidth,
+            //                 чтобы создать эффект бесшовного движения. Это позволяет изображению переместиться "вне экрана"
+            //                 и мгновенно вернуться на начальное положение, создавая иллюзию непрерывного движения.
+            //                 */
+            if imageView1.frame.origin.x <= -view.frame.size.width {
+                imageView1.frame.origin.x = view.frame.size.width
             }
+            if imageView2.frame.origin.x <= -view.frame.size.width {
+                imageView2.frame.origin.x = view.frame.size.width
+            }
+            self.animateBack(imageView1: imageView1, imageView2: imageView2, view: view)
         }
-        animateImage()
+    }
+    
+    func animateBackground(image: UIImage, on view: UIView) {
+        guard let imageView1 = view.viewWithTag(100) as? UIImageView,
+              let imageView2 = view.viewWithTag(101) as? UIImageView else {
+            let imageView1 = UIImageView(image: image)
+            let imageView2 = UIImageView(image: image)
+            imageView1.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+            imageView1.tag = 100
+            view.insertSubview(imageView1, at: 0)
+            imageView2.frame = CGRect(x: view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+            imageView2.transform = CGAffineTransform(scaleX: -1, y: 1)
+            imageView2.tag = 101
+            view.insertSubview(imageView2, at: 0)
+            
+            animateBack(imageView1: imageView1, imageView2: imageView2, view: view)
+            return
+        }
+        imageView1.layer.removeAllAnimations()
+        imageView2.layer.removeAllAnimations()
+        imageView1.image = image
+        imageView2.image = image
+        imageView1.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        imageView2.frame = CGRect(x: view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        imageView2.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }

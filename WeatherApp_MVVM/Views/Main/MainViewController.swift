@@ -54,7 +54,8 @@ final class MainViewController: UIViewController {
         viewModel.currentWeatherDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             DispatchQueue.main.async {
-                self.viewModel.animateBackground(state: String(data.weather?.first?.icon?.last ?? "d"), view: self.mainScreenViews) // при нажатии на рефреш эта функция сильно грузит процессор
+                //self.viewModel.animateBackground(state: String(data.weather?.first?.icon?.last ?? "d"), view: self.mainScreenViews) // при нажатии на рефреш эта функция сильно грузит процессор
+                self.viewModel.animateBackground(isDay: self.viewModel.isDay, view: self.view)
                 self.mainScreenViews.temperatureLabel.text = "\(Int(data.main?.temp?.rounded() ?? 0))°"
                 self.mainScreenViews.cityLabel.text = data.name
                 self.mainScreenViews.humidityLabel.text = "\(Int(data.main?.humidity ?? 0))%"

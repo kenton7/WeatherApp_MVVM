@@ -56,7 +56,8 @@ final class ForecastViewModel {
         self.forecastService.getForecast(longitude: longitude,
                                          latitude: latitude,
                                          units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, 
-                                         language: .ru) { forecastResult in
+                                         language: .ru) { [weak self] forecastResult in
+            guard let self else { return }
             
             switch forecastResult {
             case .success(let forecast):

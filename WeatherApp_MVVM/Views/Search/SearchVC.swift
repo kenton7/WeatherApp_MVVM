@@ -26,7 +26,6 @@ final class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //setupLocation()
         viewModel.forecastRealm = self.realm.objects(ForecastRealm.self)
         
         setupTableView()

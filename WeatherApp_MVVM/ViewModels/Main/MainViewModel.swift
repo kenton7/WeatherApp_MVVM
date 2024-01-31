@@ -19,7 +19,7 @@ final class MainViewModel {
     var isDay: Bool {
         return currentWeatherDataSource.value?.weather?.first?.icon?.last == "d" ? true : false
     }
-    
+
     init(currentWeatherService: ICurrentWeatherService = CurrentWeatherFetch() ) {
         self.currentWeatherService = currentWeatherService
     }
@@ -90,13 +90,19 @@ final class MainViewModel {
     }
     
     //MARK: - Animate background
-    func animateBackground(state: String, view: UIView) {
+    func animateBackground(isDay: Bool, view: UIView) {
         guard let nightImage = UIImage(named: "nightSky"), let dayImage = UIImage(named: "BackgroundImage") else { return }
         
-        if state == "d" {
+        if isDay {
             view.animateBackground(image: dayImage, on: view)
         } else {
             view.animateBackground(image: nightImage, on: view)
         }
+        
+//        if state == "d" {
+//            view.animateBackground(image: dayImage, on: view)
+//        } else {
+//            view.animateBackground(image: nightImage, on: view)
+//        }
     }
 }
