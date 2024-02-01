@@ -8,20 +8,17 @@ import UIKit
 
 final class CustomSpinner: UIView {
     // MARK: - Properties
-    /// Объявляем нужные нам переменные для CAReplicatorLayer
     private lazy var replicatorLayer: CAReplicatorLayer = {
         let caLayer = CAReplicatorLayer()
         return caLayer
     }()
 
-    /// и CAShapeLayer:
     private lazy var shapeLayer: CAShapeLayer = {
         let shapeLayer = CAShapeLayer()
         shapeLayer.fillColor = UIColor.white.cgColor
         return shapeLayer
     }()
 
-    /// Переменная для названия анимации (используем ниже)
     private let keyAnimation = "opacityAnimation"
 
     // MARK: - Init
@@ -31,8 +28,8 @@ final class CustomSpinner: UIView {
     /// По умполчанию спиннер устанавливается в центр экрана
     convenience init(squareLength: CGFloat) {
         let mainBounds = UIScreen.main.bounds
-        let rect = CGRect(origin: CGPoint(x: (mainBounds.width-squareLength)/2,
-                                          y: (mainBounds.height-squareLength)/2),
+        let rect = CGRect(origin: CGPoint(x: (mainBounds.width-squareLength) / 2,
+                                          y: (mainBounds.height-squareLength) / 2),
                           size: CGSize(width: squareLength, height: squareLength))
         self.init(frame: rect)
     }
@@ -60,8 +57,8 @@ final class CustomSpinner: UIView {
         super.layoutSubviews()
         // С помощью UIBezierPath рисуем круг и отображаем
         /// на нашем shapeLayer
-        let size = min(bounds.width/2, bounds.height/2)
-        let rect = CGRect(x: size/4, y: size/4, width: size/4, height: size/4)
+        let size = min(bounds.width / 2, bounds.height / 2)
+        let rect = CGRect(x: size / 4, y: size / 4, width: size / 4, height: size / 4)
         let path = UIBezierPath(ovalIn: rect)
         shapeLayer.path = path.cgPath
 

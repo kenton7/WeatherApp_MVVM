@@ -23,14 +23,14 @@ final class SettingsVC: UIViewController {
     //MARK: - Segmeted control pressing logic
     @objc func windSegmentedControlPressed(segment: UISegmentedControl) {
         let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
-        UserDefaults.standard.set(selectedParameter, forKey: MeasurementsTypes.wind.rawValue)
-        UserDefaults.standard.set(segment.selectedSegmentIndex, forKey: "windIndex")
+        DefaultsSaverService.shared.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.wind.rawValue)
+        DefaultsSaverService.shared.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "windIndex")
     }
     
     @objc func pressureSegmentedPressed(segment: UISegmentedControl) {
         let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
-        UserDefaults.standard.set(selectedParameter, forKey: MeasurementsTypes.pressure.rawValue)
-        UserDefaults.standard.set(segment.selectedSegmentIndex, forKey: "pressureIndex")
+        DefaultsSaverService.shared.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.pressure.rawValue)
+        DefaultsSaverService.shared.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "pressureIndex")
     }
     
     //MARK: - Setup views

@@ -53,7 +53,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         backgroundColor = .backgroundColorTabBar
         selectionStyle = .none
         tintColor = .white
-        contentView.isUserInteractionEnabled = false // чтобы можно было нажать на segmeted control в ячейке
+        contentView.isUserInteractionEnabled = false
         
         setupViews()
         setConstraints()

@@ -70,9 +70,11 @@ final class ForecastViewModel {
                 self.forecast = factory
 
                 for _ in forecast.list! {
-                    //Фильтруем дату для каждого дня в определенное время, 
-                    //которое зависит от текущего часа (Например, сейчас 15:00),
-                    //значит прогноз на другие дни показывается тоже в 15:00
+                    /*
+                    Фильтруем дату для каждого дня в определенное время,
+                    которое зависит от текущего часа (Например, сейчас 15:00),
+                    значит прогноз на другие дни показывается тоже в 15:00
+                     */
                     let filteredData = forecast.list?.filter { entry in
                         let date = Date(timeIntervalSince1970: Double(entry.dt ?? 0))
                         
@@ -99,7 +101,7 @@ final class ForecastViewModel {
                     
                     for data in filteredData! {
                         df.dateFormat = "EEEE" // день недели
-                        df.locale = Locale(identifier: "ru_RU")
+                        df.locale = Locale.current
                         df.timeZone = .current
                         let date = Date(timeIntervalSince1970: Double(data.dt ?? 0))
                         let dateString = df.string(from: date)

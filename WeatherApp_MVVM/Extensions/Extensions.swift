@@ -87,25 +87,10 @@ extension String {
 extension UIView {
     
     func animateImages(imageView1: UIImageView, imageView2: UIImageView, view: UIView) {
-        UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear]) {
+        UIView.animate(withDuration: 30.0, delay: 0.0, options: [.curveLinear]) {
             imageView1.frame = imageView1.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
             imageView2.frame = imageView2.frame.offsetBy(dx: -view.frame.size.width, dy: 0)
         } completion: { _ in
-            //                /*
-            //                 Данный участок кода отвечает за проверку позиции изображений backgroundImageView1 и backgroundImageView2 по оси X после анимации.
-            //                 Если позиция по оси X уходит за пределы отрицательного значения, что означает,
-            //                 что изображение полностью ушло за границы видимой области влево,
-            //                 то его положение сбрасывается на начальное положение.
-            //
-            //                 Рассмотрим подробнее:
-            //                 backgroundImageView1.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView1.
-            //                 backgroundImageView2.frame.origin.x - это текущая координата X (горизонтальная позиция) для backgroundImageView2.
-            //                 imageViewWidth - это ширина видимой области (ширина экрана или контейнера для анимации).
-            //                 Таким образом, если backgroundImageView1 или backgroundImageView2 выходят за левую границу видимой области
-            //                 (то есть их X-координата меньше или равна -imageViewWidth), их положение сбрасывается на imageViewWidth,
-            //                 чтобы создать эффект бесшовного движения. Это позволяет изображению переместиться "вне экрана"
-            //                 и мгновенно вернуться на начальное положение, создавая иллюзию непрерывного движения.
-            //                 */
             if imageView1.frame.origin.x <= -view.frame.size.width {
                 imageView1.frame.origin.x = view.frame.size.width
             }

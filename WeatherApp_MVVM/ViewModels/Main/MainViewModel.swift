@@ -38,7 +38,7 @@ final class MainViewModel {
         isLoading.value = true
         DispatchQueue.global(qos: .userInteractive).async {
             self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude,
-                                                         units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                          language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -55,12 +55,11 @@ final class MainViewModel {
     //MARK: - Forecast
     func getForecast(longitude: Double, latitude: Double) {
         isLoading.value = true
-        let privateUtilityQueue = DispatchQueue.global(qos: .utility)
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let self else { return }
             self.forecastService.getForecast(longitude: longitude,
                                              latitude: latitude,
-                                             units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                              language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -98,11 +97,5 @@ final class MainViewModel {
         } else {
             view.animateBackground(image: nightImage, on: view)
         }
-        
-//        if state == "d" {
-//            view.animateBackground(image: dayImage, on: view)
-//        } else {
-//            view.animateBackground(image: nightImage, on: view)
-//        }
     }
 }

@@ -16,9 +16,7 @@ struct ForecastModelNew {
     var maxTemp: Int
     var minTemp: Int
     var weatherID: Int
-    //var weatherDescription: String
     var weatherDescriptionFromServer: String = ""
-    /// Вычисляемое свойство для регулировки описания погоды, если в описании погоды 2 и более слова, так как с сервера приходит все с маленькой буквы
     var weatherDescriptionComputed: String {
         get {
             var finalStr = ""

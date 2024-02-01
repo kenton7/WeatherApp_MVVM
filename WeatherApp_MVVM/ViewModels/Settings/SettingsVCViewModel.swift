@@ -36,12 +36,11 @@ final class SettingsVCViewModel {
             selectedIndexPath = indexPath.row
             
             if indexPath.row == 0 {
-                UserDefaults.standard.setValue(MeasurementsTypes.mertic.rawValue, forKey: "units")
+                DefaultsSaverService.shared.saveToUserDefaults(data: MeasurementsTypes.mertic.rawValue, key: "units")
             } else {
-                UserDefaults.standard.setValue(MeasurementsTypes.imperial.rawValue, forKey: "units")
+                DefaultsSaverService.shared.saveToUserDefaults(data: MeasurementsTypes.imperial.rawValue, key: "units")
             }
-            UserDefaults.standard.setValue(selectedIndexPath, forKey: "selectedItem")
-            UserDefaults.standard.synchronize()
+            DefaultsSaverService.shared.saveToUserDefaults(data: selectedIndexPath, key: "selectedItem")
             completion()
         }
     }

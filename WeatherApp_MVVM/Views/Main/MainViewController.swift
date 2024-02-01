@@ -54,14 +54,13 @@ final class MainViewController: UIViewController {
         viewModel.currentWeatherDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             DispatchQueue.main.async {
-                //self.viewModel.animateBackground(state: String(data.weather?.first?.icon?.last ?? "d"), view: self.mainScreenViews) // при нажатии на рефреш эта функция сильно грузит процессор
                 self.viewModel.animateBackground(isDay: self.viewModel.isDay, view: self.view)
                 self.mainScreenViews.temperatureLabel.text = "\(Int(data.main?.temp?.rounded() ?? 0))°"
                 self.mainScreenViews.cityLabel.text = data.name
                 self.mainScreenViews.humidityLabel.text = "\(Int(data.main?.humidity ?? 0))%"
-                self.mainScreenViews.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) \(UserDefaults.standard.string(forKey: "windTitle") ?? "м/с")"
+                self.mainScreenViews.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: Double(Int(data.wind?.speed?.rounded() ?? 0)))) \(DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "windTitle") ?? "м/с")"
                 self.mainScreenViews.weatherDescription.text = data.weather?.first?.description?.capitalizingFirstLetter()
-                self.mainScreenViews.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) \(UserDefaults.standard.string(forKey: "pressureTitle") ?? "мм.рт.ст.")"
+                self.mainScreenViews.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: data.main?.pressure ?? 0)) \(DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "pressureTitle") ?? "мм.рт.ст.")"
                 self.mainScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: data.weather?.first?.id ?? 803, 
                                                                                         pod: String(data.weather?.first?.icon?.last ?? "d"))
             }
@@ -75,6 +74,7 @@ final class MainViewController: UIViewController {
                 let latitude = locationManager.location?.coordinate.latitude else { return }
         viewModel.getCurrentWeather(longitude: longitude, latitude: latitude)
         viewModel.getForecast(longitude: longitude, latitude: latitude)
+        locationManager.stopUpdatingLocation()
     }
 }
 

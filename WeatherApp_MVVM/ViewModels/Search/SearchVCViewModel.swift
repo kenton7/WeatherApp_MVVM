@@ -51,7 +51,6 @@ final class SearchVCViewModel {
         self.geoService.searchCity(city) { cityResult in
             switch cityResult {
             case .success(_):
-//                guard let localName = geoData.first?.localNames?["ru"] else { return }
                 self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, 
                                                              latitude: self.forecastRealm[indexPath.section].latitude,
                                                              units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { [weak self] currentWeatherDataResult in

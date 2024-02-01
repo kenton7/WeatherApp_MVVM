@@ -67,6 +67,8 @@
 		09FD12492B68F3EE0027ABCA /* RealmUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD12482B68F3EE0027ABCA /* RealmUpdateService.swift */; };
 		09FD124B2B68F48D0027ABCA /* RealmSaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD124A2B68F48D0027ABCA /* RealmSaveService.swift */; };
 		09FD124D2B68F8E50027ABCA /* RealmDeleteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD124C2B68F8E50027ABCA /* RealmDeleteService.swift */; };
+		09FD12602B6C21FB0027ABCA /* DefaultsSaverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD125F2B6C21FB0027ABCA /* DefaultsSaverService.swift */; };
+		09FD12622B6C24B00027ABCA /* DefaultsGetterDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD12612B6C24B00027ABCA /* DefaultsGetterDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,8 @@
 		09FD12482B68F3EE0027ABCA /* RealmUpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUpdateService.swift; sourceTree = "<group>"; };
 		09FD124A2B68F48D0027ABCA /* RealmSaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSaveService.swift; sourceTree = "<group>"; };
 		09FD124C2B68F8E50027ABCA /* RealmDeleteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDeleteService.swift; sourceTree = "<group>"; };
+		09FD125F2B6C21FB0027ABCA /* DefaultsSaverService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsSaverService.swift; sourceTree = "<group>"; };
+		09FD12612B6C24B00027ABCA /* DefaultsGetterDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsGetterDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +215,8 @@
 				09FD12482B68F3EE0027ABCA /* RealmUpdateService.swift */,
 				09FD124A2B68F48D0027ABCA /* RealmSaveService.swift */,
 				09FD124C2B68F8E50027ABCA /* RealmDeleteService.swift */,
+				09FD125F2B6C21FB0027ABCA /* DefaultsSaverService.swift */,
+				09FD12612B6C24B00027ABCA /* DefaultsGetterDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -454,6 +460,7 @@
 				09FD11FC2B6262EB0027ABCA /* MainScreenViews.swift in Sources */,
 				0902BF502B50370600C5CDA0 /* URLRequestConvertable.swift in Sources */,
 				0902BF252B502E2D00C5CDA0 /* MainViewController.swift in Sources */,
+				09FD12602B6C21FB0027ABCA /* DefaultsSaverService.swift in Sources */,
 				0902BF702B5063C300C5CDA0 /* CalculateMesurements.swift in Sources */,
 				0902BF8E2B51373A00C5CDA0 /* SearchVCViewModel.swift in Sources */,
 				09DD47592B53F03D006929A4 /* Settings + TableView.swift in Sources */,
@@ -479,6 +486,7 @@
 				09DD47732B546055006929A4 /* ForecastViewModel.swift in Sources */,
 				0902BF7E2B51250600C5CDA0 /* SearchVC + TableView.swift in Sources */,
 				0902BF472B5032F400C5CDA0 /* CurrentWeatherFetch.swift in Sources */,
+				09FD12622B6C24B00027ABCA /* DefaultsGetterDataService.swift in Sources */,
 				0902BF722B5064D200C5CDA0 /* GetWeatherImage.swift in Sources */,
 				0902BF652B50451F00C5CDA0 /* Extensions.swift in Sources */,
 				0902BF842B51268000C5CDA0 /* SearchCellViewModel.swift in Sources */,

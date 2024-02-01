@@ -26,7 +26,6 @@ extension SearchVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchingCity = searchBar.text else { return }
         searchBar.searchTextField.autocorrectionType = .yes
-        UserDefaults.standard.set(searchingCity, forKey: "city")
         viewModel.searchCity(city: searchingCity)
         searchBar.text = ""
         searchBar.endEditing(true)
