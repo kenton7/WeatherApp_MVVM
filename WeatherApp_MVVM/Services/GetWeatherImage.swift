@@ -8,14 +8,18 @@
 import UIKit
 import Foundation
 
-final class GetWeatherImage {
+protocol IGetWeatherImage {
+    func weatherImages(id: Int, pod: String?) -> UIImage
+}
+
+final class GetWeatherImage: IGetWeatherImage {
     
     /// Функция для автоматического выбора картинки погоды, на основе ID погоды, приходящей с сервера
     /// - Parameters:
     ///   - id: ID погоды с сервера
     ///   - pod: символ "d" (day) или "n" (night). Выбирается либо дневная картинка, либо ночная
     /// - Returns: Возвращает полученную картинку
-    class func weatherImages(id: Int, pod: String?) -> UIImage {
+    func weatherImages(id: Int, pod: String?) -> UIImage {
         guard let pod else {
             print("Не удалось определить картинку погоды по pod \(String(describing: pod))")
             return UIImage(named: "cloudy-weather")!

@@ -10,15 +10,20 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let home = TabBarController()
-        self.window?.rootViewController = home
+        window = UIWindow(windowScene: windowScene)
+        let navigationController = UINavigationController()
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        window?.windowScene = windowScene
+        let coordinator = AppCoordinator(type: .main, navigationController: navigationController)
+        coordinator.start()
+//        let home = TabBarController()
+//        self.window?.rootViewController = home
+//        window?.makeKeyAndVisible()
+//        window?.windowScene = windowScene
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,7 +54,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 

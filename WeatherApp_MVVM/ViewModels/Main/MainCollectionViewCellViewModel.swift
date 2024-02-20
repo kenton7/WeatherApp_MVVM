@@ -13,11 +13,12 @@ final class MainCollectionViewCellViewModel {
     var image: UIImage
     var temperature: String
     
-    init(_ data: List) {
+    init(_ data: List, weatherImageService: IGetWeatherImage) {
         let date = data.dateString?.components(separatedBy: "-")
         let separatedDate = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
         self.time = separatedDate
-        self.image = GetWeatherImage.weatherImages(id: data.weather!.first?.id ?? 803, pod: String(data.weather!.first?.icon?.last ?? "d"))
+        //self.image = GetWeatherImage.weatherImages(id: data.weather!.first?.id ?? 803, pod: String(data.weather!.first?.icon?.last ?? "d"))
+        self.image = weatherImageService.weatherImages(id: data.weather!.first?.id ?? 803, pod: String(data.weather!.first?.icon?.last ?? "d"))
         self.temperature = "\(Int(data.main?.temp?.rounded() ?? 0))"
     }
 }

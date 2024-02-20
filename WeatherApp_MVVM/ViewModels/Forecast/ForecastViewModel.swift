@@ -39,7 +39,7 @@ final class ForecastViewModel {
     func getCurrentWeather(longitude: Double, latitude: Double) {
         currentWeatherService.getCurrentWeather(longitute: longitude,
                                                 latitude: latitude,
-                                                units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                 language: .ru) { currentWeatherResult in
             switch currentWeatherResult {
             case .success(let weatherData):
@@ -55,7 +55,7 @@ final class ForecastViewModel {
         isLoading.value = true
         self.forecastService.getForecast(longitude: longitude,
                                          latitude: latitude,
-                                         units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, 
+                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue, 
                                          language: .ru) { [weak self] forecastResult in
             guard let self else { return }
             
@@ -101,7 +101,7 @@ final class ForecastViewModel {
                     
                     for data in filteredData! {
                         df.dateFormat = "EEEE" // день недели
-                        df.locale = Locale.current
+                        df.locale = Locale(identifier: "ru_RU")
                         df.timeZone = .current
                         let date = Date(timeIntervalSince1970: Double(data.dt ?? 0))
                         let dateString = df.string(from: date)

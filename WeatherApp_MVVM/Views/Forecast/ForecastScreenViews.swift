@@ -269,7 +269,7 @@ final class ForecastScreenViews: UIView {
             detailStackView.widthAnchor.constraint(equalTo: weatherView.widthAnchor, multiplier: 0.9),
             detailStackView.heightAnchor.constraint(equalToConstant: 100),
             
-            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             tableView.topAnchor.constraint(equalTo: weatherView.bottomAnchor, constant: 10),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0)

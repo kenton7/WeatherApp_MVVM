@@ -120,11 +120,12 @@ final class ForecastTableViewCell: UITableViewCell {
     }
     
     //MARK: - Setup cell
-    func setupCell(_ model: ForecastModelNew) {
+    func setupCell(_ model: ForecastModelNew, weatherImageService: IGetWeatherImage) {
         weatherDescription.text = model.weatherDescriptionComputed
         dayLabel.text = model.date
         minTemp.text = "\(model.minTemp)°"
         maxTemp.text = "\(model.maxTemp)°"
-        weatherImage.image = GetWeatherImage.weatherImages(id: model.weatherID, pod: model.dayOrNight)
+        //weatherImage.image = GetWeatherImage.weatherImages(id: model.weatherID, pod: model.dayOrNight)
+        weatherImage.image = weatherImageService.weatherImages(id: model.weatherID, pod: model.dayOrNight)
     }
 }

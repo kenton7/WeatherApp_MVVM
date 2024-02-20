@@ -364,7 +364,7 @@ final class MainScreenViews: UIView {
             
             collectionView.topAnchor.constraint(equalTo: sevenDaysForecast.bottomAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 100),
         ])
     }

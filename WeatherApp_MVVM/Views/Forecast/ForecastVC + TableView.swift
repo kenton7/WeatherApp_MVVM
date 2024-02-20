@@ -52,7 +52,7 @@ extension ForecastVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ForecastTableViewCell.cellID, for: indexPath) as? ForecastTableViewCell else { return UITableViewCell() }
         let cellViewModel = viewModel.forecastData[indexPath.section]
-        cell.setupCell(cellViewModel)
+        cell.setupCell(cellViewModel, weatherImageService: weatherImagesService)
         return cell
     }
 }

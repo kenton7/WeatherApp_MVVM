@@ -7,13 +7,18 @@
 
 import Foundation
 
-final class CalculateMeasurements {
+protocol ICalculateMeasurements {
+    func calculatePressure(measurementIndex: Int, value: Int) -> Int
+    func calculateWindSpeed(measurementIndex: Int, value: Double) -> Int
+}
+
+final class CalculateMeasurements: ICalculateMeasurements {
     /// Функция переводит давление в другую систему исчисления
     /// - Parameters:
     ///   - measurementIndex: Индекс сегментед контола, который выбрал юзер
     ///   - value: значение давления, полученное с сервера
     /// - Returns: возвращаем результат в другой системе исчесления
-    class func calculatePressure(measurementIndex: Int, value: Int) -> Int {
+    func calculatePressure(measurementIndex: Int, value: Int) -> Int {
         var result = 0
         switch measurementIndex {
         case 0:
@@ -35,7 +40,7 @@ final class CalculateMeasurements {
     ///   - measurementIndex: Индекс сегментед контрола
     ///   - value: Значение скорости ветра, полученное с сервера
     /// - Returns: Возвращаем результат в другой системе исчисления
-    class func calculateWindSpeed(measurementIndex: Int, value: Double) -> Int {
+    func calculateWindSpeed(measurementIndex: Int, value: Double) -> Int {
         var result = 0
         switch measurementIndex {
         case 0:

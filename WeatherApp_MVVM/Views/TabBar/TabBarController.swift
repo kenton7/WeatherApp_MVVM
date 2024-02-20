@@ -11,22 +11,33 @@ final class TabBarController: UITabBarController {
 
     private let tabBarView = TabBarView()
     
+    init(tabBarControllers: [UIViewController]) {
+        super.init(nibName: nil, bundle: nil)
+        for tab in tabBarControllers {
+            self.addChild(tab)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         self.setValue(tabBarView, forKey: "tabBar")
-        setupVCs()
+        //setupVCs()
         self.selectedIndex = 0
     }
     
     //MARK: - Setup controllers
-    func setupVCs() {
-        viewControllers = [
-            createNavController(for: MainViewController(), image: UIImage(systemName: "house.fill")!),
-            createNavController(for: SearchVC(), image: UIImage(systemName: "magnifyingglass")!),
-            createNavController(for: SettingsVC(), image: UIImage(systemName: "gear")!)
-        ]
-    }
+//    func setupVCs() {
+//        viewControllers = [
+//            createNavController(for: MainViewController(), image: UIImage(systemName: "house.fill")!),
+//            createNavController(for: SearchVC(), image: UIImage(systemName: "magnifyingglass")!),
+//            createNavController(for: SettingsVC(), image: UIImage(systemName: "gear")!)
+//        ]
+//    }
     
     //MARK: - Create nav controller
     fileprivate func createNavController(for rootViewController: UIViewController,

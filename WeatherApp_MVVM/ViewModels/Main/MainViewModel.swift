@@ -37,7 +37,8 @@ final class MainViewModel {
     func getCurrentWeather(longitude: Double, latitude: Double) {
         isLoading.value = true
         DispatchQueue.global(qos: .userInteractive).async {
-            self.currentWeatherService.getCurrentWeather(longitute: longitude, latitude: latitude,
+            self.currentWeatherService.getCurrentWeather(longitute: longitude, 
+                                                         latitude: latitude,
                                                          units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                          language: Language.ru) { [weak self] result in
                 guard let self else { return }
@@ -71,7 +72,6 @@ final class MainViewModel {
                         dataSource = arr
                         mapCellData()
                     }
-                    
                 case .failure(let error):
                     print("error when loading forecast from API: \(error.localizedDescription)")
                 }
@@ -84,13 +84,14 @@ final class MainViewModel {
         for i in dataSource! {
             let date = i.dateString?.components(separatedBy: "-")
             _ = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
-            cellDataSource.value = dataSource?.compactMap { MainCollectionViewCellViewModel($0) }
+            cellDataSource.value = dataSource?.compactMap { MainCollectionViewCellViewModel($0, weatherImageService: GetWeatherImage() ) }
         }
     }
     
     //MARK: - Animate background
     func animateBackground(isDay: Bool, view: UIView) {
-        guard let nightImage = UIImage(named: "nightSky"), let dayImage = UIImage(named: "BackgroundImage") else { return }
+        guard let nightImage = UIImage(named: "nightSky"), 
+                let dayImage = UIImage(named: "BackgroundImage") else { return }
         
         if isDay {
             view.animateBackground(image: dayImage, on: view)

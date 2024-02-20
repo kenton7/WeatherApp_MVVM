@@ -17,10 +17,16 @@ final class ForecastVC: UIViewController {
     var longitude: Double
     var latitude: Double
     
-    init(latitude: Double, longitude: Double, forecastScreenViews: ForecastScreenViews = ForecastScreenViews() ) {
+    let calculateMeasurementsService: ICalculateMeasurements
+    let weatherImagesService: IGetWeatherImage
+    
+    
+    init(latitude: Double, longitude: Double, forecastScreenViews: ForecastScreenViews = ForecastScreenViews(), calculateMeasurementsService: ICalculateMeasurements, weatherImagesService: IGetWeatherImage ) {
         self.latitude = latitude
         self.longitude = longitude
         self.forecastScreenViews = forecastScreenViews
+        self.calculateMeasurementsService = calculateMeasurementsService
+        self.weatherImagesService = weatherImagesService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -63,7 +69,8 @@ final class ForecastVC: UIViewController {
             DispatchQueue.main.async {
                 self.forecastScreenViews.maxTemperatureLabel.text = "\(Int(currentWeather.main?.tempMax?.rounded() ?? 0.0))°"
                 self.forecastScreenViews.minTemperaureLabel.text = "/\(Int(currentWeather.main?.tempMin?.rounded() ?? 0.0))°"
-                self.forecastScreenViews.weatherImage.image = GetWeatherImage.weatherImages(id: currentWeather.weather?.first?.id ?? 803, pod: String(currentWeather.weather?.first?.icon?.last ?? "d"))
+                self.forecastScreenViews.weatherImage.image = self.weatherImagesService.weatherImages(id: currentWeather.weather?.first?.id ?? 803, pod: String(currentWeather.weather?.first?.icon?.last ?? "d"))
+            
             }
         }
         
@@ -79,8 +86,8 @@ final class ForecastVC: UIViewController {
                 dataForecast = data
                 DispatchQueue.main.async {
                     self.forecastScreenViews.humidityLabel.text = "\(humidity)%"
-                    self.forecastScreenViews.pressureLabel.text = "\(CalculateMeasurements.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: pressure)) \(UserDefaults.standard.string(forKey: MeasurementsTypes.pressure.rawValue) ?? "мм.рт.ст.")"
-                    self.forecastScreenViews.windLabel.text = "\(CalculateMeasurements.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: windSpeed)) \(UserDefaults.standard.string(forKey: MeasurementsTypes.wind.rawValue) ?? "м/с")"
+                    self.forecastScreenViews.pressureLabel.text = "\(self.calculateMeasurementsService.calculatePressure(measurementIndex: UserDefaults.standard.integer(forKey: "pressureIndex"), value: pressure)) \(DefaultsGetterDataService.shared.getDataFromUserDefaults(key: MeasurementsTypes.pressure.rawValue) ?? "мм.рт.ст.")"
+                    self.forecastScreenViews.windLabel.text = "\(self.calculateMeasurementsService.calculateWindSpeed(measurementIndex: UserDefaults.standard.integer(forKey: "windIndex"), value: windSpeed)) \(DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "windTitle") ?? "м/с")"
                 }
             }
             reloadTableView()

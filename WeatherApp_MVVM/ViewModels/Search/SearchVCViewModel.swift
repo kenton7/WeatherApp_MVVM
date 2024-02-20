@@ -18,10 +18,20 @@ final class SearchVCViewModel {
     lazy var realm = try! Realm()
     var realmDataSource = [ForecastRealm]()
     var forecastRealm: Results<ForecastRealm>!
+    let realmUpdateDataService: IRealmUpdateService
+    let realmSaveService: IRealmSaveService
+    let realmDeleteService: IRealmDelete
     
-    init(geoSrvice: IGeoService = GeoService(), currentWeatherService: ICurrentWeatherService = CurrentWeatherFetch() ) {
+    init(geoSrvice: IGeoService = GeoService(), 
+         currentWeatherService: ICurrentWeatherService = CurrentWeatherFetch(),
+         realmUpdateDataService: IRealmUpdateService,
+         realmSaveService: IRealmSaveService,
+         realmDeleteService: IRealmDelete) {
         self.geoService = geoSrvice
         self.currentWeatherService = currentWeatherService
+        self.realmUpdateDataService = realmUpdateDataService
+        self.realmSaveService = realmSaveService
+        self.realmDeleteService = realmDeleteService
     }
     
     
@@ -53,13 +63,13 @@ final class SearchVCViewModel {
             case .success(_):
                 self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, 
                                                              latitude: self.forecastRealm[indexPath.section].latitude,
-                                                             units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { [weak self] currentWeatherDataResult in
+                                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { [weak self] currentWeatherDataResult in
                     guard let self else { return }
                     switch currentWeatherDataResult {
                     case .success(let weatherData):
-                        RealmUpdateDataService.shared.updateDataInRealm(dataArray: self.forecastRealm, 
-                                                                        indexPath: indexPath,
-                                                                        currentWeatherModel: weatherData) { realmModel in
+                        realmUpdateDataService.updateDataInRealm(dataArray: self.forecastRealm,
+                                                                 indexPath: indexPath,
+                                                                 currentWeatherModel: weatherData) { realmModel in
                             self.realmListener.value = realmModel
                             self.realmDataSource = realmModel
                             self.mapCellData()
@@ -86,14 +96,14 @@ final class SearchVCViewModel {
                     guard let latitude = $0.lat, let longitude = $0.lon else { return }
                     self.currentWeatherService.getCurrentWeather(longitute: longitude, 
                                                                  latitude: latitude,
-                                                                 units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                                 units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                                  language: .ru) { currentWeatherResult in
                         switch currentWeatherResult {
                         case .success(let weather):
                             let realmFactory = CurrentWeatherFactory.makeRealmModel(weather, cityName: localName)
                             self.realmDataSource = realmFactory
                             self.mapCellData()
-                            RealmSaveService.shared.saveToDatabase(data: realmFactory)
+                            self.realmSaveService.saveToDatabase(data: realmFactory)
                         case .failure(let error):
                             print(error.localizedDescription)
                         }
@@ -114,7 +124,7 @@ final class SearchVCViewModel {
     func locationButtonPressed(longitude: Double, latitude: Double) {
         currentWeatherService.getCurrentWeather(longitute: longitude, 
                                                 latitude: latitude,
-                                                units: UserDefaults.standard.string(forKey: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
                                                 language: .ru) { weatherResult in
             switch weatherResult {
             case .success(let weatherData):
@@ -141,15 +151,15 @@ final class SearchVCViewModel {
     
     //MARK: - Delete data from Realm
     func deleteDataFromRealm(indexPath: IndexPath) {
-        RealmDeleteService.shared.deleteFromRealm(data: forecastRealm[indexPath.section], 
-                                                  completion: mapCellData)
+        realmDeleteService.deleteFromRealm(data: forecastRealm[indexPath.section],
+                                           completion: mapCellData)
     }
     
     //MARK: - User selected row in TableView
-    func didSelectRow(indexPath: IndexPath, data: ForecastRealm) -> UIViewController {
-        let transferData = forecastRealm[indexPath.section]
-        let forecastVC = ForecastVC(latitude: transferData.latitude, longitude: transferData.longitude)
-        forecastVC.hidesBottomBarWhenPushed = false
-        return forecastVC
-    }
+//    func didSelectRow(indexPath: IndexPath, data: ForecastRealm) -> UIViewController {
+//        let transferData = forecastRealm[indexPath.section]
+//        let forecastVC = ForecastVC(latitude: transferData.latitude, longitude: transferData.longitude)
+//        forecastVC.hidesBottomBarWhenPushed = false
+//        return forecastVC
+//    }
 }

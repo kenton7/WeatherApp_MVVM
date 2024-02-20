@@ -14,9 +14,27 @@ final class SearchVC: UIViewController {
     let locationManager = CLLocationManager()
     var coordinates: Coordinates?
     var realmDataSource = [SearchCellViewModel]()
-    var viewModel = SearchVCViewModel()
+    var viewModel: SearchVCViewModel
     private lazy var realm = try! Realm()
     let searchScreenViews = SearchScreenViews()
+    let weatherImagesService: IGetWeatherImage
+    let realmUpdateService: IRealmUpdateService?
+    let realmSaverService: IRealmSaveService?
+    let realmDeleteService: IRealmDelete?
+    
+    init(weatherImageService: IGetWeatherImage, realmUpdateService: IRealmUpdateService?, realmSaverService: IRealmSaveService?,
+         realmDeleteService: IRealmDelete?, searchViewModel: SearchVCViewModel) {
+        self.weatherImagesService = weatherImageService
+        self.realmSaverService = realmSaverService
+        self.realmDeleteService = realmDeleteService
+        self.realmUpdateService = realmUpdateService
+        self.viewModel = searchViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         super.loadView()
@@ -27,7 +45,6 @@ final class SearchVC: UIViewController {
         super.viewDidLoad()
 
         viewModel.forecastRealm = self.realm.objects(ForecastRealm.self)
-        
         setupTableView()
         setupSearchBar()
         bindViewModel()
@@ -36,6 +53,7 @@ final class SearchVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLocation()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     //MARK: - Location button pressed method
