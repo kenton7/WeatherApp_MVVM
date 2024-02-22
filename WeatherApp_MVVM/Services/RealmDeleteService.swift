@@ -12,7 +12,7 @@ protocol IRealmDelete {
     func deleteFromRealm(data: ForecastRealm, completion: @escaping () -> Void)
 }
 
-class RealmDeleteService: IRealmDelete {
+final class RealmDeleteService: IRealmDelete {
     
     static let shared = RealmDeleteService()
     private init() {}

@@ -46,7 +46,7 @@ final class ForecastScreenViews: UIView {
         return label
     }()
     
-    lazy var minTemperaureLabel: UILabel = {
+    lazy var minTemperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "/ --°"
         label.textAlignment = .right
@@ -100,7 +100,7 @@ final class ForecastScreenViews: UIView {
         return view
     }()
     
-    private let winddStackView: UIStackView = {
+    private let windStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
@@ -211,6 +211,7 @@ final class ForecastScreenViews: UIView {
         setConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -222,22 +223,22 @@ final class ForecastScreenViews: UIView {
         addSubview(weatherView)
         addSubview(weatherImage)
         addSubview(maxTemperatureLabel)
-        addSubview(minTemperaureLabel)
+        addSubview(minTemperatureLabel)
         addSubview(detailStackView)
         addSubview(spinner)
         
         detailStackView.addArrangedSubview(pressureStackView)
         detailStackView.addArrangedSubview(humidityStackView)
-        detailStackView.addArrangedSubview(winddStackView)
+        detailStackView.addArrangedSubview(windStackView)
         pressureStackView.addArrangedSubview(pressureImage)
         pressureStackView.addArrangedSubview(pressureLabel)
         pressureStackView.addArrangedSubview(pressureName)
         humidityStackView.addArrangedSubview(humidityImage)
         humidityStackView.addArrangedSubview(humidityLabel)
         humidityStackView.addArrangedSubview(humidityName)
-        winddStackView.addArrangedSubview(windImage)
-        winddStackView.addArrangedSubview(windLabel)
-        winddStackView.addArrangedSubview(windName)
+        windStackView.addArrangedSubview(windImage)
+        windStackView.addArrangedSubview(windLabel)
+        windStackView.addArrangedSubview(windName)
     }
     
     //MARK: - Constraints
@@ -255,8 +256,8 @@ final class ForecastScreenViews: UIView {
             
             maxTemperatureLabel.leadingAnchor.constraint(equalTo: weatherImage.trailingAnchor, constant: 16),
             maxTemperatureLabel.topAnchor.constraint(equalTo: weatherView.topAnchor, constant: 10),
-            minTemperaureLabel.leadingAnchor.constraint(equalTo: maxTemperatureLabel.trailingAnchor, constant: 0),
-            minTemperaureLabel.topAnchor.constraint(equalTo: weatherView.topAnchor, constant: 40),
+            minTemperatureLabel.leadingAnchor.constraint(equalTo: maxTemperatureLabel.trailingAnchor, constant: 0),
+            minTemperatureLabel.topAnchor.constraint(equalTo: weatherView.topAnchor, constant: 40),
             
             humidityStackView.topAnchor.constraint(equalTo: pressureStackView.topAnchor),
             humidityImage.heightAnchor.constraint(equalToConstant: 24),

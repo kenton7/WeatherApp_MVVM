@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol OtherMeasurementsCellDelegate: AnyObject {
+    func pressureSegmentedPressed(segment: UISegmentedControl)
+    func windSegmentedControlPressed(segment: UISegmentedControl)
+}
+
 final class OtherMeasurementsCell: UITableViewCell {
     
     static let cellID = "OtherMeasurementsCell"
+    
+    weak var delegate: OtherMeasurementsCellDelegate?
     
     private lazy var parameterLabel: UILabel = {
        let label = UILabel()
@@ -20,7 +27,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         return label
     }()
     
-    private var segmentedControlForWind: UISegmentedControl = {
+    private lazy var segmentedControlForWind: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: [
             MeasurementsTypes.metersPerSecond.rawValue,
             MeasurementsTypes.kilometerPerHour.rawValue,
@@ -29,11 +36,11 @@ final class OtherMeasurementsCell: UITableViewCell {
         segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "windIndex")
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)], for: .normal)
-        segmentedControl.addTarget(self, action: #selector(SettingsVC.windSegmentedControlPressed(segment:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(windSegmentedControlPressed(segment:)), for: .valueChanged)
         return segmentedControl
     }()
     
-    private var segmetedControlForPressure: UISegmentedControl = {
+    private lazy var segmentedControlForPressure: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: [
             MeasurementsTypes.mmRtSt.rawValue,
             MeasurementsTypes.hPa.rawValue,
@@ -42,7 +49,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "pressureIndex")
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)], for: .normal)
-        segmentedControl.addTarget(self, action: #selector(SettingsVC.pressureSegmentedPressed(segment:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(pressureSegmentedPressed(segment:)), for: .valueChanged)
         return segmentedControl
     }()
     
@@ -59,6 +66,7 @@ final class OtherMeasurementsCell: UITableViewCell {
         setConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,7 +75,12 @@ final class OtherMeasurementsCell: UITableViewCell {
     private func setupViews() {
         addSubview(parameterLabel)
         addSubview(segmentedControlForWind)
-        addSubview(segmetedControlForPressure)
+        addSubview(segmentedControlForPressure)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
     }
     
     //MARK: - Constraints
@@ -80,19 +93,20 @@ final class OtherMeasurementsCell: UITableViewCell {
             
             segmentedControlForWind.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
             segmentedControlForWind.centerYAnchor.constraint(equalTo: centerYAnchor),
-            segmentedControlForWind.widthAnchor.constraint(equalTo: segmetedControlForPressure.widthAnchor),
+            segmentedControlForWind.widthAnchor.constraint(equalTo: segmentedControlForPressure.widthAnchor),
             
-            segmetedControlForPressure.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            segmetedControlForPressure.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10)
+            segmentedControlForPressure.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            segmentedControlForPressure.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10)
         ])
     }
     
     //MARK: - Setup cell
-    func setupOtherMeasurementsCell(indexPath: IndexPath) {
+    func setupOtherMeasurementsCell(indexPath: IndexPath, delegate: OtherMeasurementsCellDelegate?) {
+        self.delegate = delegate
         parameterLabel.text = MeasureType.allCases[indexPath.row + 2].rawValue
         
         if indexPath.row == 0 {
-            segmetedControlForPressure.isHidden = true
+            segmentedControlForPressure.isHidden = true
             if let value = UserDefaults.standard.value(forKey: "windIndex") {
                 let selectedIndex = value as! Int
                 segmentedControlForWind.selectedSegmentIndex = selectedIndex
@@ -101,9 +115,17 @@ final class OtherMeasurementsCell: UITableViewCell {
             segmentedControlForWind.isHidden = true
             if let value = UserDefaults.standard.value(forKey: "pressureIndex") {
                 let selectedIndex = value as! Int
-                segmetedControlForPressure.selectedSegmentIndex = selectedIndex
+                segmentedControlForPressure.selectedSegmentIndex = selectedIndex
             }
         }
         accessoryType = .none
+    }
+    
+    @objc func pressureSegmentedPressed(segment: UISegmentedControl) {
+        delegate?.pressureSegmentedPressed(segment: segment)
+    }
+    
+    @objc func windSegmentedControlPressed(segment: UISegmentedControl) {
+        delegate?.windSegmentedControlPressed(segment: segment)
     }
 }

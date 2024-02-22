@@ -15,7 +15,7 @@ protocol IRealmUpdateService {
                            completion: @escaping (([ForecastRealm]) -> Void) )
 }
 
-class RealmUpdateDataService: IRealmUpdateService {
+final class RealmUpdateDataService: IRealmUpdateService {
     
     static let shared = RealmUpdateDataService()
     private init() {}

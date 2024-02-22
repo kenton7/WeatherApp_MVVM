@@ -15,7 +15,7 @@ protocol IForecastService {
                      completion: @escaping (Result<ForecastModel, Error>) -> Void)
 }
 
-class ForecastFetch: IForecastService {
+final class ForecastFetch: IForecastService {
     
     private let client: RestApiClient
     
@@ -36,7 +36,7 @@ class ForecastFetch: IForecastService {
             switch result {
             case .success(let data):
                 do {
-                    let forecast = try JSONDecoder().decode(ForecastModel.self, from: data)
+                    let forecast = try JSONDecoderHelper.getDecoder().decode(ForecastModel.self, from: data)
                     completion(.success(forecast))
                 } catch let error {
                     print("can't parse forecast: \(error.localizedDescription)")

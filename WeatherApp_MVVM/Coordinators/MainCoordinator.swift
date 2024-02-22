@@ -9,16 +9,15 @@ import Foundation
 
 class MainCoordinator: Coordinator {
     
+    let serviceLocator = ServiceLocator.shared
+    
     override func start() {
-        let serviceLocator: IServiceLocator = {
-            let serviceLocator = ServiceLocator.shared
-            serviceLocator.addService(service: CalculateMeasurements() as ICalculateMeasurements)
-            serviceLocator.addService(service: GetWeatherImage() as IGetWeatherImage)
-            return serviceLocator
-        }()
         
-        let weatherImageService: IGetWeatherImage! = serviceLocator.getService()
-        let calculateMeasurementsService: ICalculateMeasurements! = serviceLocator.getService()
+        serviceLocator.addService(service: CalculateMeasurements() as ICalculateMeasurements)
+        serviceLocator.addService(service: GetWeatherImage() as IGetWeatherImage)
+        
+        guard let weatherImageService: IGetWeatherImage = serviceLocator.getService(),
+              let calculateMeasurementsService: ICalculateMeasurements = serviceLocator.getService() else { return }
         let vc = MainViewController(weatherImageService: weatherImageService, calculateMeasurementsService: calculateMeasurementsService)
         navigationController?.pushViewController(vc, animated: true)
         navigationController?.setNavigationBarHidden(true, animated: false)

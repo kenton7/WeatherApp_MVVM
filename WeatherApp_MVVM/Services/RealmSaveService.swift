@@ -12,7 +12,7 @@ protocol IRealmSaveService {
     func saveToDatabase(data: [ForecastRealm])
 }
 
-class RealmSaveService: IRealmSaveService {
+final class RealmSaveService: IRealmSaveService {
     
     static let shared = RealmSaveService()
     private init() {}

@@ -66,7 +66,7 @@ final class SearchVC: UIViewController {
         viewModel.cellDataSource.bind { [weak self] data in
             guard let self, let data = data else { return }
             realmDataSource = data
-            reloadTableView() 
+            reloadTableView()
         }
     }
 }

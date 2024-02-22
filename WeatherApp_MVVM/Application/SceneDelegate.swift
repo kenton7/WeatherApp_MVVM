@@ -20,10 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         let coordinator = AppCoordinator(type: .main, navigationController: navigationController)
         coordinator.start()
-//        let home = TabBarController()
-//        self.window?.rootViewController = home
-//        window?.makeKeyAndVisible()
-//        window?.windowScene = windowScene
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

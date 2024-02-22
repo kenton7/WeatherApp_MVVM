@@ -109,7 +109,6 @@ final class SearchTableViewCell: UITableViewCell {
     
     //MARK: - Setup cell
     func setupCellNew(_ model: ForecastRealm, weatherImageService: IGetWeatherImage) {
-        //weatherImage.image = GetWeatherImage.weatherImages(id: model.id, pod: model.dayOrNight)
         weatherImage.image = weatherImageService.weatherImages(id: model.id, pod: model.dayOrNight)
         temperatureLabel.text = "\(Int(model.temp))°"
         weatherDescriptionLabel.text = model.weatherDescription.capitalizingFirstLetter()

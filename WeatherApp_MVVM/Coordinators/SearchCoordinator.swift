@@ -9,19 +9,20 @@ import Foundation
 
 class SearchCoordinator: Coordinator {
     
+    let serviceLocator = ServiceLocator.shared
+    
     override func start() {
-        let serviceLocator: IServiceLocator = {
-            let serviceLocator = ServiceLocator.shared
-            serviceLocator.addService(service: RealmUpdateDataService.shared as IRealmUpdateService)
-            serviceLocator.addService(service: RealmSaveService.shared as IRealmSaveService)
-            serviceLocator.addService(service: RealmDeleteService.shared as IRealmDelete)
-            return serviceLocator
-        }()
+        serviceLocator.addService(service: RealmUpdateDataService.shared as IRealmUpdateService)
+        serviceLocator.addService(service: RealmSaveService.shared as IRealmSaveService)
+        serviceLocator.addService(service: RealmDeleteService.shared as IRealmDelete)
         
-        let weatherImageService: IGetWeatherImage! = serviceLocator.getService()
-        let realmUpdateService: IRealmUpdateService! = serviceLocator.getService()
-        let realmDeleteService: IRealmDelete! = serviceLocator.getService()
-        let realmSaverService: IRealmSaveService! = serviceLocator.getService()
+        
+        guard let weatherImageService: IGetWeatherImage = serviceLocator.getService(),
+              let realmUpdateService: IRealmUpdateService = serviceLocator.getService(),
+              let realmDeleteService: IRealmDelete = serviceLocator.getService(),
+              let realmSaverService: IRealmSaveService = serviceLocator.getService() else {
+            return
+        }
         let searchViewModel = SearchVCViewModel(realmUpdateDataService: realmUpdateService, realmSaveService: realmSaverService, realmDeleteService: realmDeleteService)
         let vc = SearchVC(weatherImageService: weatherImageService, realmUpdateService: nil, realmSaverService: nil, realmDeleteService: nil, searchViewModel: searchViewModel)
         navigationController?.pushViewController(vc, animated: true)

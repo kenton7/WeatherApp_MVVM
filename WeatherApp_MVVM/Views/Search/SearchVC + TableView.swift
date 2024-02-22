@@ -104,12 +104,9 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let transferData = viewModel.forecastRealm[indexPath.section]
-        //let vc =  viewModel.didSelectRow(indexPath: indexPath, data: transferData)
         let forecastCoordinator = ForecastCoordinator(type: .forecast, navigationController: navigationController!)
         forecastCoordinator.latitude = transferData.latitude
         forecastCoordinator.longitude = transferData.longitude
         forecastCoordinator.start()
-        
-        //navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -20,73 +20,93 @@ final class GetWeatherImage: IGetWeatherImage {
     ///   - pod: символ "d" (day) или "n" (night). Выбирается либо дневная картинка, либо ночная
     /// - Returns: Возвращает полученную картинку
     func weatherImages(id: Int, pod: String?) -> UIImage {
+        
+        guard let cloudyWeather = UIImage(named: "cloudy-weather"),
+              let nightStorm = UIImage(named: "night-storm"),
+              let storm = UIImage(named: "storm"),
+              let nightCloudsSun = UIImage(named: "night-clouds-sun"),
+              let rain = UIImage(named: "rain"),
+              let nightRain = UIImage(named: "night-rain"),
+              let nightSnow = UIImage(named: "night-snow"),
+              let snow = UIImage(named: "snow"),
+              let nightFoggy = UIImage(named: "night-foggy"),
+              let foggy = UIImage(named: "foggy"),
+              let nightMoon = UIImage(named: "night-moon"),
+              let sun = UIImage(named: "sun"),
+              let nightCloudy = UIImage(named: "night-cloudy"),
+              let nightCloudy2 = UIImage(named: "night-cloudy2"),
+              let cloudy = UIImage(named: "cloudy") else {
+            return UIImage()
+        }
+              
+        
         guard let pod else {
             print("Не удалось определить картинку погоды по pod \(String(describing: pod))")
-            return UIImage(named: "cloudy-weather")!
+            return cloudyWeather
         }
         switch id {
         case 200...232:
             if pod == "n" {
-                return UIImage(named: "night-storm")!
+                return nightStorm
             } else {
-                return UIImage(named: "storm")!
+                return storm
             }
         case 300...321:
             if pod == "n" {
-                return UIImage(named: "night-clouds-sun")!
+                return nightCloudsSun
             } else {
-                return UIImage(named: "rain")!
+                return rain
             }
         case 500...531:
             if pod == "n" {
-                return UIImage(named: "night-rain")!
+                return nightRain
             } else {
-                return UIImage(named: "rain")!
+                return rain
             }
         case 600...622:
             if pod == "n" {
-                return UIImage(named: "night-snow")!
+                return nightSnow
             } else {
-                return UIImage(named: "snow")!
+                return snow
             }
         case 700...781:
             if pod == "n" {
-                return UIImage(named: "night-foggy")!
+                return nightFoggy
             } else {
-                return UIImage(named: "foggy")!
+                return foggy
             }
         case 800:
             if pod == "n" {
-                return UIImage(named: "night-moon")!
+                return nightMoon
             } else {
-                return UIImage(named: "sun")!
+                return sun
             }
         case 801:
             if pod == "n" {
-                return UIImage(named: "night-cloudy")!
+                return nightCloudy
             } else {
-                return UIImage(named: "cloudy-weather")!
+                return cloudyWeather
             }
         case 802:
             if pod == "n" {
-                return UIImage(named: "night-cloudy2")!
+                return nightCloudy2
             } else {
-                return UIImage(named: "cloudy")!
+                return cloudy
             }
         case 803:
             if pod == "n" {
-                return UIImage(named: "night-cloudy")!
+                return nightCloudy
             } else {
-                return UIImage(named: "cloudy-weather")!
+                return cloudyWeather
             }
         case 804:
             if pod == "n" {
-                return UIImage(named: "night-cloudy2")!
+                return nightCloudy2
             } else {
-                return UIImage(named: "cloudy")!
+                return cloudy
             }
         default:
-            return UIImage(named: "cloudy-weather")!
+            return cloudyWeather
         }
     }
 }

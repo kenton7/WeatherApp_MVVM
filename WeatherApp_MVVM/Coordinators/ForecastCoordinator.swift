@@ -9,15 +9,16 @@ import UIKit
 
 class ForecastCoordinator: Coordinator {
     
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
+    var latitude = 0.0
+    var longitude = 0.0
+    let serviceLocator = ServiceLocator.shared
     
     override func start() {
-        
-        let serviceLocator = ServiceLocator.shared
-        
-        let weatherImageService: IGetWeatherImage! = serviceLocator.getService()
-        let calculateMeasurementsService: ICalculateMeasurements! = serviceLocator.getService()
+
+        guard let weatherImageService: IGetWeatherImage = serviceLocator.getService(),
+              let calculateMeasurementsService: ICalculateMeasurements = serviceLocator.getService() else {
+            return
+        }
         
         let vc = ForecastVC(latitude: latitude, longitude: longitude, calculateMeasurementsService: calculateMeasurementsService, weatherImagesService: weatherImageService)
         navigationController?.setNavigationBarHidden(false, animated: false)

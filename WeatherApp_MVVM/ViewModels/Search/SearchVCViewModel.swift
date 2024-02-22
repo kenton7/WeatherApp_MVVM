@@ -22,12 +22,12 @@ final class SearchVCViewModel {
     let realmSaveService: IRealmSaveService
     let realmDeleteService: IRealmDelete
     
-    init(geoSrvice: IGeoService = GeoService(), 
+    init(geoService: IGeoService = GeoService(),
          currentWeatherService: ICurrentWeatherService = CurrentWeatherFetch(),
          realmUpdateDataService: IRealmUpdateService,
          realmSaveService: IRealmSaveService,
          realmDeleteService: IRealmDelete) {
-        self.geoService = geoSrvice
+        self.geoService = geoService
         self.currentWeatherService = currentWeatherService
         self.realmUpdateDataService = realmUpdateDataService
         self.realmSaveService = realmSaveService
@@ -61,9 +61,9 @@ final class SearchVCViewModel {
         self.geoService.searchCity(city) { cityResult in
             switch cityResult {
             case .success(_):
-                self.currentWeatherService.getCurrentWeather(longitute: self.forecastRealm[indexPath.section].longitude, 
+                self.currentWeatherService.getCurrentWeather(longitude: self.forecastRealm[indexPath.section].longitude, 
                                                              latitude: self.forecastRealm[indexPath.section].latitude,
-                                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue, language: .ru) { [weak self] currentWeatherDataResult in
+                                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue, language: .ru) { [weak self] currentWeatherDataResult in
                     guard let self else { return }
                     switch currentWeatherDataResult {
                     case .success(let weatherData):
@@ -75,7 +75,7 @@ final class SearchVCViewModel {
                             self.mapCellData()
                         }
                     case .failure(let error):
-                        print("error when gettting current weather: \(error.localizedDescription)")
+                        print("error when getting current weather: \(error.localizedDescription)")
                     }
                 }
             case .failure(let error):
@@ -94,9 +94,9 @@ final class SearchVCViewModel {
                 guard let localName = geoData.first?.localNames?["ru"] else { return }
                 geoData.forEach {
                     guard let latitude = $0.lat, let longitude = $0.lon else { return }
-                    self.currentWeatherService.getCurrentWeather(longitute: longitude, 
+                    self.currentWeatherService.getCurrentWeather(longitude: longitude, 
                                                                  latitude: latitude,
-                                                                 units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                                 units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue,
                                                                  language: .ru) { currentWeatherResult in
                         switch currentWeatherResult {
                         case .success(let weather):
@@ -122,9 +122,9 @@ final class SearchVCViewModel {
     
     //MARK: - Location button pressed
     func locationButtonPressed(longitude: Double, latitude: Double) {
-        currentWeatherService.getCurrentWeather(longitute: longitude, 
+        currentWeatherService.getCurrentWeather(longitude: longitude, 
                                                 latitude: latitude,
-                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue,
                                                 language: .ru) { weatherResult in
             switch weatherResult {
             case .success(let weatherData):
@@ -154,12 +154,4 @@ final class SearchVCViewModel {
         realmDeleteService.deleteFromRealm(data: forecastRealm[indexPath.section],
                                            completion: mapCellData)
     }
-    
-    //MARK: - User selected row in TableView
-//    func didSelectRow(indexPath: IndexPath, data: ForecastRealm) -> UIViewController {
-//        let transferData = forecastRealm[indexPath.section]
-//        let forecastVC = ForecastVC(latitude: transferData.latitude, longitude: transferData.longitude)
-//        forecastVC.hidesBottomBarWhenPushed = false
-//        return forecastVC
-//    }
 }

@@ -9,21 +9,20 @@ import Foundation
 
 class SettingsCoordinator: Coordinator {
     
+    let serviceLocator = ServiceLocator.shared
+    
     override func start() {
-
-        let serviceLocator: IServiceLocator = {
-            let serviceLocator = ServiceLocator.shared
-            serviceLocator.addService(service: DefaultsSaverService.shared as IDefaultSaverService)
-            serviceLocator.addService(service: DefaultsGetterDataService.shared as IDefaultsGetterData)
-            return serviceLocator
-        }()
+        serviceLocator.addService(service: DefaultsSaverService.shared as IDefaultSaverService)
+        serviceLocator.addService(service: DefaultsGetterDataService.shared as IDefaultsGetterData)
         
-        let defaultsSaverService: IDefaultSaverService! = serviceLocator.getService()
-        let defaultsGetterService: IDefaultsGetterData! = serviceLocator.getService()
+        guard let defaultsSaverService: IDefaultSaverService = serviceLocator.getService(),
+              let defaultsGetterService: IDefaultsGetterData = serviceLocator.getService() else {
+            return
+        }
         
         let settingsViewModel = SettingsVCViewModel()
         let vc = SettingsVC(defaultsGetterService: defaultsGetterService,
-                            defaultsSaverDervice: defaultsSaverService,
+                            defaultsSaverService: defaultsSaverService,
                             settingsViewModel: settingsViewModel)
         navigationController?.pushViewController(vc, animated: true)
         navigationController?.setNavigationBarHidden(true, animated: false)

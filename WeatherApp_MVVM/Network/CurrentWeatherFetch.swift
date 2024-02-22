@@ -8,14 +8,14 @@
 import Foundation
 
 protocol ICurrentWeatherService {
-    func getCurrentWeather(longitute: Double,
+    func getCurrentWeather(longitude: Double,
                            latitude: Double,
                            units: String,
                            language: Language,
                            completion: @escaping (Result<CurrentWeatherModel, Error>) -> Void)
 }
 
-class CurrentWeatherFetch: ICurrentWeatherService {
+final class CurrentWeatherFetch: ICurrentWeatherService {
     
     private let client: RestApiClient
     
@@ -23,20 +23,20 @@ class CurrentWeatherFetch: ICurrentWeatherService {
         self.client = client
     }
     
-    func getCurrentWeather(longitute: Double, 
+    func getCurrentWeather(longitude: Double, 
                            latitude: Double,
                            units: String,
                            language: Language,
                            completion: @escaping (Result<CurrentWeatherModel, Error>) -> Void) {
                 
         client.performRequest(WeatherEndpoints.currentWeather(latitude: latitude, 
-                                                              longitude: longitute,
+                                                              longitude: longitude,
                                                               units: units,
                                                               lang: language)) { result in
             switch result {
             case .success(let data):
                 do {
-                    let weather = try JSONDecoder().decode(CurrentWeatherModel.self, from: data)
+                    let weather = try JSONDecoderHelper.getDecoder().decode(CurrentWeatherModel.self, from: data)
                     completion(.success(weather))
                 } catch let error {
                     print("can't parse current weather: \(error.localizedDescription)")

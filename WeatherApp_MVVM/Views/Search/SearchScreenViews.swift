@@ -7,8 +7,8 @@
 
 import UIKit
 
-class SearchScreenViews: UIView {
-
+final class SearchScreenViews: UIView {
+    
     private var locationButton: UIButton = {
        let button = UIButton()
         button.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
@@ -46,6 +46,7 @@ class SearchScreenViews: UIView {
         setConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

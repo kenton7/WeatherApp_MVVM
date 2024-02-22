@@ -35,11 +35,13 @@ final class ForecastViewModel {
         return 60
     }
     
+    
+    
     //MARK: - Current weather logic
     func getCurrentWeather(longitude: Double, latitude: Double) {
-        currentWeatherService.getCurrentWeather(longitute: longitude,
+        currentWeatherService.getCurrentWeather(longitude: longitude,
                                                 latitude: latitude,
-                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue,
                                                 language: .ru) { currentWeatherResult in
             switch currentWeatherResult {
             case .success(let weatherData):
@@ -51,25 +53,27 @@ final class ForecastViewModel {
     }
     
     //MARK: - Forecast logic
-    func getForeast(longitude: Double, latitude: Double) {
+    func getForecast(longitude: Double, latitude: Double) {
         isLoading.value = true
         self.forecastService.getForecast(longitude: longitude,
                                          latitude: latitude,
-                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue, 
+                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue, 
                                          language: .ru) { [weak self] forecastResult in
             guard let self else { return }
             
             switch forecastResult {
             case .success(let forecast):
                 let calendar = Calendar.current
-                let df = DateFormatter()
+                let df = DateFormatterHelper.dateFormatter
                 
                 self.forecastData.removeAll()
                 let factory = ForecastFactory.makeForecastModelArray(forecast)
                 self.forecastDataSource.value = factory
                 self.forecast = factory
 
-                for _ in forecast.list! {
+                guard let forecastList = forecast.list else { return }
+                
+                for _ in forecastList {
                     /*
                     Фильтруем дату для каждого дня в определенное время,
                     которое зависит от текущего часа (Например, сейчас 15:00),
@@ -99,10 +103,9 @@ final class ForecastViewModel {
                         }
                     }
                     
-                    for data in filteredData! {
-                        df.dateFormat = "EEEE" // день недели
-                        df.locale = Locale(identifier: "ru_RU")
-                        df.timeZone = .current
+                    guard let filtered = filteredData else { return }
+                    
+                    for data in filtered {
                         let date = Date(timeIntervalSince1970: Double(data.dt ?? 0))
                         let dateString = df.string(from: date)
                         self.forecastData.append(ForecastModelNew(maxTemp: Int(data.main?.tempMax?.rounded() ?? 0.0), 

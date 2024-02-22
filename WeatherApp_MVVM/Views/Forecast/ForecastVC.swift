@@ -50,7 +50,7 @@ final class ForecastVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.getForeast(longitude: longitude, latitude: latitude)
+        viewModel.getForecast(longitude: longitude, latitude: latitude)
         viewModel.getCurrentWeather(longitude: longitude, latitude: latitude)
     }
     
@@ -68,7 +68,7 @@ final class ForecastVC: UIViewController {
                     let currentWeather = currentWeather else { return }
             DispatchQueue.main.async {
                 self.forecastScreenViews.maxTemperatureLabel.text = "\(Int(currentWeather.main?.tempMax?.rounded() ?? 0.0))°"
-                self.forecastScreenViews.minTemperaureLabel.text = "/\(Int(currentWeather.main?.tempMin?.rounded() ?? 0.0))°"
+                self.forecastScreenViews.minTemperatureLabel.text = "/\(Int(currentWeather.main?.tempMin?.rounded() ?? 0.0))°"
                 self.forecastScreenViews.weatherImage.image = self.weatherImagesService.weatherImages(id: currentWeather.weather?.first?.id ?? 803, pod: String(currentWeather.weather?.first?.icon?.last ?? "d"))
             
             }
@@ -99,11 +99,19 @@ final class ForecastVC: UIViewController {
 private extension ForecastVC {
     func setupNavigationController() {
         title = "Прогноз на 5 дней"
-        navigationController?.navigationBar.titleTextAttributes = [
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(red: 0.322, green: 0.239, blue: 0.498, alpha: 1)
+        appearance.titleTextAttributes = [
             .foregroundColor: UIColor.white,
             .font: UIFont.boldSystemFont(ofSize: 17)
         ]
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactScrollEdgeAppearance = appearance
+        navigationController?.navigationBar.standardAppearance = appearance
     }
 }

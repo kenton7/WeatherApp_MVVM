@@ -14,7 +14,7 @@ enum MeasurementsTypes: String {
     case metersPerSecond = "м/c"
     case kilometerPerHour = "км/ч"
     case milesPerHour = "ми/ч"
-    case mertic = "metric"
+    case metric = "metric"
     case imperial = "imperial"
     case wind = "windTitle"
     case pressure = "pressureTitle"

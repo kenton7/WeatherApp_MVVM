@@ -12,11 +12,11 @@ final class SettingsVC: UIViewController {
     let settingsViewModel: SettingsVCViewModel
     lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let defaultsGetterService: IDefaultsGetterData
-    let defaultsSaverDervice: IDefaultSaverService
+    let defaultsSaverService: IDefaultSaverService
     
-    init(defaultsGetterService: IDefaultsGetterData, defaultsSaverDervice: IDefaultSaverService, settingsViewModel: SettingsVCViewModel) {
+    init(defaultsGetterService: IDefaultsGetterData, defaultsSaverService: IDefaultSaverService, settingsViewModel: SettingsVCViewModel) {
         self.defaultsGetterService = defaultsGetterService
-        self.defaultsSaverDervice = defaultsSaverDervice
+        self.defaultsSaverService = defaultsSaverService
         self.settingsViewModel = settingsViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,17 +34,17 @@ final class SettingsVC: UIViewController {
         setupTableView()
     }
     
-    //MARK: - Segmeted control pressing logic
+    //MARK: - Segmented control pressing logic
     @objc func windSegmentedControlPressed(segment: UISegmentedControl) {
         let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
-        defaultsSaverDervice.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.wind.rawValue)
-        defaultsSaverDervice.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "windIndex")
+        defaultsSaverService.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.wind.rawValue)
+        defaultsSaverService.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "windIndex")
     }
     
     @objc func pressureSegmentedPressed(segment: UISegmentedControl) {
         let selectedParameter = segment.titleForSegment(at: segment.selectedSegmentIndex)
-        defaultsSaverDervice.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.pressure.rawValue)
-        defaultsSaverDervice.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "pressureIndex")
+        defaultsSaverService.saveToUserDefaults(data: selectedParameter, key: MeasurementsTypes.pressure.rawValue)
+        defaultsSaverService.saveToUserDefaults(data: segment.selectedSegmentIndex, key: "pressureIndex")
     }
     
     //MARK: - Setup views

@@ -29,7 +29,7 @@ final class MainViewModel {
         1
     }
     
-    func numberOfitems() -> Int {
+    func numberOfItems() -> Int {
         return dataSource?.count ?? 0
     }
     
@@ -37,9 +37,9 @@ final class MainViewModel {
     func getCurrentWeather(longitude: Double, latitude: Double) {
         isLoading.value = true
         DispatchQueue.global(qos: .userInteractive).async {
-            self.currentWeatherService.getCurrentWeather(longitute: longitude, 
+            self.currentWeatherService.getCurrentWeather(longitude: longitude, 
                                                          latitude: latitude,
-                                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                                         units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue,
                                                          language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -60,7 +60,7 @@ final class MainViewModel {
             guard let self else { return }
             self.forecastService.getForecast(longitude: longitude,
                                              latitude: latitude,
-                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.mertic.rawValue,
+                                             units: DefaultsGetterDataService.shared.getDataFromUserDefaults(key: "units") ?? MeasurementsTypes.metric.rawValue,
                                              language: Language.ru) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -81,10 +81,11 @@ final class MainViewModel {
     
     //MARK: - Mapping
     func mapCellData() {
-        for i in dataSource! {
+        guard let dataSource = dataSource else { return }
+        for i in dataSource {
             let date = i.dateString?.components(separatedBy: "-")
             _ = String(date?[2].components(separatedBy: " ").dropFirst().joined().prefix(5) ?? "")
-            cellDataSource.value = dataSource?.compactMap { MainCollectionViewCellViewModel($0, weatherImageService: GetWeatherImage() ) }
+            cellDataSource.value = dataSource.compactMap { MainCollectionViewCellViewModel($0, weatherImageService: GetWeatherImage() ) }
         }
     }
     

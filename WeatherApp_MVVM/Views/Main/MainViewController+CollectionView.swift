@@ -32,7 +32,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     //MARK: - numberOfItemsInSection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfitems()
+        return viewModel.numberOfItems()
     }
     
     //MARK: - cellForItemAt

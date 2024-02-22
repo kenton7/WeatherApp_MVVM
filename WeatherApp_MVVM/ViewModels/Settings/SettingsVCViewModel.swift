@@ -36,7 +36,7 @@ final class SettingsVCViewModel {
             selectedIndexPath = indexPath.row
             
             if indexPath.row == 0 {
-                DefaultsSaverService.shared.saveToUserDefaults(data: MeasurementsTypes.mertic.rawValue, key: "units")
+                DefaultsSaverService.shared.saveToUserDefaults(data: MeasurementsTypes.metric.rawValue, key: "units")
             } else {
                 DefaultsSaverService.shared.saveToUserDefaults(data: MeasurementsTypes.imperial.rawValue, key: "units")
             }

@@ -125,7 +125,6 @@ final class ForecastTableViewCell: UITableViewCell {
         dayLabel.text = model.date
         minTemp.text = "\(model.minTemp)°"
         maxTemp.text = "\(model.maxTemp)°"
-        //weatherImage.image = GetWeatherImage.weatherImages(id: model.weatherID, pod: model.dayOrNight)
         weatherImage.image = weatherImageService.weatherImages(id: model.weatherID, pod: model.dayOrNight)
     }
 }

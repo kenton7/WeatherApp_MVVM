@@ -11,7 +11,7 @@ protocol IGeoService {
     func searchCity(_ city: String, completion: @escaping (Result<Geocoding, Error>) -> Void)
 }
 
-class GeoService: IGeoService {
+final class GeoService: IGeoService {
     
     private let client: RestApiClient
     
@@ -24,7 +24,7 @@ class GeoService: IGeoService {
             switch result {
             case .success(let geoData):
                 do {
-                    let city = try JSONDecoder().decode(Geocoding.self, from: geoData)
+                    let city = try JSONDecoderHelper.getDecoder().decode(Geocoding.self, from: geoData)
                     completion(.success(city))
                 }
                 catch let error {

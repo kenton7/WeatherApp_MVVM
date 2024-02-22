@@ -45,7 +45,7 @@ final class CustomSpinner: UIView {
         replicatorLayer.addSublayer(shapeLayer)
     }
 
-    /// Обязательный нициализатор,
+    /// Обязательный инициализатор,
     /// available(*, unavailable) - означает что он не будет отображаться
     ///в подсказке при создании класса
     @available(*, unavailable)
@@ -73,7 +73,7 @@ final class CustomSpinner: UIView {
     /// - Parameters:
     ///   - delay: Время анимации, чем меньше значение,
     /// тем быстрее будет анимация
-    ///   - replicates: количество реплик, то есть экземляров класса replicatorLayer
+    ///   - replicates: количество реплик, то есть экземпляров класса replicatorLayer
     func startAnimation(delay: TimeInterval, replicates: Int) {
         replicatorLayer.instanceCount = replicates
         replicatorLayer.instanceDelay = delay

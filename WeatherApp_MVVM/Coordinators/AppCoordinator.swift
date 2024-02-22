@@ -26,19 +26,19 @@ private extension AppCoordinator {
         
         let mainNavigationController = UINavigationController()
         let mainCoordinator = MainCoordinator(type: .main, navigationController: mainNavigationController)
-        mainNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "house.fill")!, tag: 0)
+        mainNavigationController.tabBarItem = UITabBarItem.houseFill
         mainCoordinator.coordinatorFinishDelegate = self
         mainCoordinator.start()
         
         let searchNavigationController = UINavigationController()
         let searchCoordinator = SearchCoordinator(type: .search, navigationController: searchNavigationController)
-        searchNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "magnifyingglass")!, tag: 1)
+        searchNavigationController.tabBarItem = UITabBarItem.magnifyingGlass
         searchCoordinator.coordinatorFinishDelegate = self
         searchCoordinator.start()
         
         let settingsNavigationController = UINavigationController()
         let settingsCoordinator = SettingsCoordinator(type: .search, navigationController: settingsNavigationController)
-        settingsNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "gear")!, tag: 2)
+        settingsNavigationController.tabBarItem = UITabBarItem.gear
         settingsCoordinator.coordinatorFinishDelegate = self
         settingsCoordinator.start()
         

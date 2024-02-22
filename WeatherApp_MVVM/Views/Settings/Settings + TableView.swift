@@ -65,7 +65,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell = OtherMeasurementsCell(style: .default, reuseIdentifier: OtherMeasurementsCell.cellID)
-            cell.setupOtherMeasurementsCell(indexPath: indexPath)
+            cell.setupOtherMeasurementsCell(indexPath: indexPath, delegate: self)
             return cell
         }
     }
@@ -75,3 +75,5 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         settingsViewModel.didSelectRowAt(indexPath: indexPath, completion: reloadTableView)
     }
 }
+
+extension SettingsVC: OtherMeasurementsCellDelegate {}

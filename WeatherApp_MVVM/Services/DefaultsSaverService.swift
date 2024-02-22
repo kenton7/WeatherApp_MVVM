@@ -11,7 +11,7 @@ protocol IDefaultSaverService {
     func saveToUserDefaults<T>(data: T, key: String)
 }
 
-class DefaultsSaverService: IDefaultSaverService {
+final class DefaultsSaverService: IDefaultSaverService {
     
     static let shared = DefaultsSaverService()
     private init() {}

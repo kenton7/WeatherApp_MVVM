@@ -11,7 +11,7 @@ protocol IDefaultsGetterData {
     func getDataFromUserDefaults(key: String) -> String?
 }
 
-class DefaultsGetterDataService: IDefaultsGetterData {
+final class DefaultsGetterDataService: IDefaultsGetterData {
     
     static let shared = DefaultsGetterDataService()
     private init() {}

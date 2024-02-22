@@ -18,7 +18,7 @@ extension UIColor {
 
 //MARK: - UIImage
 extension UIImage {
-    /// Функция для добавления круга на зданий фон картнки
+    /// Функция для добавления круга на зданий фон картинки
     /// - Parameter color: цвет круга
     /// - Returns: картинка с кругом на заднем фоне
     func addBackgroundCircle(_ color: UIColor?) -> UIImage? {
@@ -102,8 +102,8 @@ extension UIView {
     }
     
     func animateBackground(image: UIImage, on view: UIView) {
-        guard let imageView1 = view.viewWithTag(100) as? UIImageView,
-              let imageView2 = view.viewWithTag(101) as? UIImageView else {
+        guard view.viewWithTag(100) as? UIImageView != nil,
+              view.viewWithTag(101) as? UIImageView != nil else {
             let imageView1 = UIImageView(image: image)
             let imageView2 = UIImageView(image: image)
             imageView1.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
@@ -118,4 +118,13 @@ extension UIView {
             return
         }
     }
+}
+
+//MARK: - UITabBarItem
+extension UITabBarItem {
+    static let houseFill = UITabBarItem(title: "", image: Images.houseFill, tag: 0)
+    
+    static let magnifyingGlass = UITabBarItem(title: "", image: Images.magnifyingGlass, tag: 1)
+    
+    static let gear = UITabBarItem(title: "", image: Images.gear, tag: 2)
 }
