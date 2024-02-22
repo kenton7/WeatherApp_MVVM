@@ -21,92 +21,73 @@ final class GetWeatherImage: IGetWeatherImage {
     /// - Returns: Возвращает полученную картинку
     func weatherImages(id: Int, pod: String?) -> UIImage {
         
-        guard let cloudyWeather = UIImage(named: "cloudy-weather"),
-              let nightStorm = UIImage(named: "night-storm"),
-              let storm = UIImage(named: "storm"),
-              let nightCloudsSun = UIImage(named: "night-clouds-sun"),
-              let rain = UIImage(named: "rain"),
-              let nightRain = UIImage(named: "night-rain"),
-              let nightSnow = UIImage(named: "night-snow"),
-              let snow = UIImage(named: "snow"),
-              let nightFoggy = UIImage(named: "night-foggy"),
-              let foggy = UIImage(named: "foggy"),
-              let nightMoon = UIImage(named: "night-moon"),
-              let sun = UIImage(named: "sun"),
-              let nightCloudy = UIImage(named: "night-cloudy"),
-              let nightCloudy2 = UIImage(named: "night-cloudy2"),
-              let cloudy = UIImage(named: "cloudy") else {
-            return UIImage()
-        }
-              
-        
         guard let pod else {
             print("Не удалось определить картинку погоды по pod \(String(describing: pod))")
-            return cloudyWeather
+            return Images.cloudyWeather
         }
         switch id {
         case 200...232:
             if pod == "n" {
-                return nightStorm
+                return Images.nightStorm
             } else {
-                return storm
+                return Images.storm
             }
         case 300...321:
             if pod == "n" {
-                return nightCloudsSun
+                return Images.nightCloudsSun
             } else {
-                return rain
+                return Images.rain
             }
         case 500...531:
             if pod == "n" {
-                return nightRain
+                return Images.nightRain
             } else {
-                return rain
+                return Images.rain
             }
         case 600...622:
             if pod == "n" {
-                return nightSnow
+                return Images.nightSnow
             } else {
-                return snow
+                return Images.snow
             }
         case 700...781:
             if pod == "n" {
-                return nightFoggy
+                return Images.nightFoggy
             } else {
-                return foggy
+                return Images.foggy
             }
         case 800:
             if pod == "n" {
-                return nightMoon
+                return Images.nightMoon
             } else {
-                return sun
+                return Images.sun
             }
         case 801:
             if pod == "n" {
-                return nightCloudy
+                return Images.nightCloudy
             } else {
-                return cloudyWeather
+                return Images.cloudyWeather
             }
         case 802:
             if pod == "n" {
-                return nightCloudy2
+                return Images.nightCloudy2
             } else {
-                return cloudy
+                return Images.cloudy
             }
         case 803:
             if pod == "n" {
-                return nightCloudy
+                return Images.nightCloudy
             } else {
-                return cloudyWeather
+                return Images.cloudyWeather
             }
         case 804:
             if pod == "n" {
-                return nightCloudy2
+                return Images.nightCloudy2
             } else {
-                return cloudy
+                return Images.cloudy
             }
         default:
-            return cloudyWeather
+            return Images.cloudyWeather
         }
     }
 }
